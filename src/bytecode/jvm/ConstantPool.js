@@ -114,7 +114,6 @@ const ConstantPoolTypes = [
 
 let getContantPoolStruct = _.memoize((index) => {
   return _.find(ConstantPoolTypes, { index }).attrs;
-  // return ConstantPoolTypes[idx].attrs;
 });
 
 export class ConstantPool {

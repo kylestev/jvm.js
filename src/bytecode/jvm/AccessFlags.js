@@ -35,7 +35,9 @@ function AccessFlags() {
   funcs.listFlags = (flags) => {
       // console.log(funcs)
     return _.pluck(_.filter(_.map(_.keys(funcs), (method) => {
-      if (!method.startsWith("is")) return null;
+      if (!method.startsWith('is')) {
+        return null;
+      }
       // console.log(method)
       let name = method.substring(2).toLowerCase();
       return {

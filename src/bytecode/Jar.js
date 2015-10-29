@@ -16,7 +16,6 @@ export default class Jar {
         if (err) {
           return reject(err);
         }
-
         resolve({ name, buffer });
       });
     });
@@ -31,8 +30,8 @@ export default class Jar {
           // currently iterating over with the value returned from this method
           .map((entry) => {
             let name = entry.entryName;
-            if (name.endsWith(".class")) {
-              name = name.replace(".class", "");
+            if (name.endsWith('.class')) {
+              name = name.replace('.class', '');
               return new Promise((resolve, reject) => {
                 entry.getDataAsync((buffer, error) => {
                   // this._classes[name] = buffer;
