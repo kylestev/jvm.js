@@ -62,54 +62,30 @@ export default class ClassParser {
     }
   }
 
-  _parseInterfaces(cls) {
-    let interfaces_count = this.buff.short();
-    cls.property('interfaces_count', interfaces_count);
-    for (let ifaceIdx = 0; ifaceIdx < interfaces_count - 1; ifaceIdx++) {
-      cls.interfaceIndices.push(this.buff.readStruct(
-        Structures.class_file.interface
+  _parseStructureArray(cls, prop) {
+    let pluralProp = prop + 's';
+    let length = this.buff.short();
+    cls.property(pluralProp + '_count', length);
+    for (let idx = 0; idx < length; idx++) {
+      cls[pluralProp].push(this.buff.readStruct(
+        Structures.class_file[prop]
       ));
     }
+  }
+
+  _parseInterfaces(cls) {
+    this._parseStructureArray(cls, 'interface');
   }
 
   _parseFields(cls) {
-    let fields_count = this.buff.short();
-    cls.property('fields_count', fields_count);
-    for (let fieldIdx = 0; fieldIdx < fields_count; fieldIdx++) {
-      cls.fields.push(this.buff.readStruct(
-        Structures.class_file.field
-      ));
-    }
+    this._parseStructureArray(cls, 'field');
   }
 
   _parseMethods(cls) {
-    let methods_count = this.buff.short();
-    cls.property('methods_count', methods_count);
-    for (let methodIdx = 0; methodIdx < methods_count; methodIdx++) {
-      let method = this.buff.readStruct(
-        Structures.class_file.method
-      );
-
-      method.attribute_info.forEach((attr) => {
-        attr.name = cls.string(attr.attribute_name_index);
-      });
-
-      cls.methods.push(method);
-    }
+    this._parseStructureArray(cls, 'method');
   }
 
   _parseAttributes(cls) {
-    let attributes_count = this.buff.short();
-    cls.property('attributes_count', attributes_count);
-    for (let attributeIdx = 0; attributeIdx < attributes_count; attributeIdx++) {
-      cls.attributes.push(this.buff.readStruct(
-        Structures.class_file.attribute
-      ));
-    }
-
-    // resolve attrs
-    _.each(cls.attributes, (attr) => {
-      let attrName = cls.string(attr.attribute_name_index);
-    });
+    this._parseStructureArray(cls, 'attribute');
   }
 }

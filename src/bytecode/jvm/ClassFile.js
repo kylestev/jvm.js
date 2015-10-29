@@ -17,7 +17,7 @@ export class ClassFile {
     this.name = name;
     this.props = new Map();
     this.constantPool = new ConstantPool();
-    this.interfaceIndices = [];
+    this.interfaces = [];
     this.fields = [];
     this.methods = [];
     this.attributes = [];
@@ -102,7 +102,7 @@ export class ClassFile {
       struct.strings.push(val.bytes.toString('UTF8'));
     });
 
-    _.each(this.interfaceIndices, (idx) => {
+    _.each(this.interfaces, (idx) => {
       struct.interfaces.push(this.constantPool.at(idx))
     });
 
