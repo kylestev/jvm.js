@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "lodash": "^3.10.1",
+    "promisify-node": "^0.2.1"
+  },
+  "devDependencies": {
+    "babel": "^5.8.29"
+  }
+}
