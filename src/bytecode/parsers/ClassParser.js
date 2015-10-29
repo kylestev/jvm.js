@@ -66,7 +66,9 @@ export default class ClassParser {
     let interfaces_count = this.buff.short();
     cls.property('interfaces_count', interfaces_count);
     for (let ifaceIdx = 0; ifaceIdx < interfaces_count - 1; ifaceIdx++) {
-      cls.interfaceIndices.push(this.buff.short());
+      cls.interfaceIndices.push(this.buff.readStruct(
+        Structures.class_file.interface
+      ));
     }
   }
 

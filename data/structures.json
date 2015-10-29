@@ -1,5 +1,9 @@
 {
     "class_file": {
+        "interface": [
+            [ "class_index", 2 ]
+          ],
+
         "field": [
             [ "access_flags", 2 ],
             [ "name_index", 2 ],
