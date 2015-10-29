@@ -3,9 +3,11 @@ import { ClassFile } from '../jvm/ClassFile';
 import { AccessFlags } from '../jvm/AccessFlags';
 import {SIZE_INT, SIZE_SHORT, SIZE_BYTE} from '../parsers/NiceBuffer';
 
+const Structures = require('../../../data/structures.json');
+
 const Errors = require('../../Errors');
 const _ = require('../../util/lodash');
-const Attributes = require('../jvm/Attributes');
+// const Attributes = require('../jvm/Attributes');
 
 export default class ClassParser {
   constructor(name, buff) {
@@ -72,21 +74,9 @@ export default class ClassParser {
     let fields_count = this.buff.short();
     cls.property('fields_count', fields_count);
     for (let fieldIdx = 0; fieldIdx < fields_count; fieldIdx++) {
-      let field = this.buff.readStruct([
-        [ 'access_flags', SIZE_SHORT ],
-        [ 'name_index', SIZE_SHORT ],
-        [ 'descriptor_index', SIZE_SHORT ],
-        [ 'attribute_count', SIZE_SHORT ],
-        [ '@attribute_info|attribute_count', {
-          struct: [
-            [ 'attribute_name_index', SIZE_SHORT ],
-            [ 'attribute_length', SIZE_INT ],
-            [ '$info', 'attribute_length' ],
-          ]
-        }],
-      ]);
-
-      cls.fields.push(field);
+      cls.fields.push(this.buff.readStruct(
+        Structures.class_file.field
+      ));
     }
   }
 
@@ -94,25 +84,13 @@ export default class ClassParser {
     let methods_count = this.buff.short();
     cls.property('methods_count', methods_count);
     for (let methodIdx = 0; methodIdx < methods_count; methodIdx++) {
-      let method = this.buff.readStruct([
-        [ 'access_flags', SIZE_SHORT ],
-        [ 'name_index', SIZE_SHORT ],
-        [ 'descriptor_index', SIZE_SHORT ],
-        [ 'attributes_count', SIZE_SHORT ],
-        [ '@attribute_info|attributes_count', {
-          struct: [
-            [ 'attribute_name_index', SIZE_SHORT ],
-            [ 'attribute_length', SIZE_INT ],
-            [ '$info', 'attribute_length' ],
-          ]
-        }],
-      ]);
+      let method = this.buff.readStruct(
+        Structures.class_file.method
+      );
 
       method.attribute_info.forEach((attr) => {
         attr.name = cls.string(attr.attribute_name_index);
-        console.log(attr.name);
-        console.log(Attributes.decodeAttribute(attr));
-      })
+      });
 
       cls.methods.push(method);
     }
@@ -122,13 +100,9 @@ export default class ClassParser {
     let attributes_count = this.buff.short();
     cls.property('attributes_count', attributes_count);
     for (let attributeIdx = 0; attributeIdx < attributes_count; attributeIdx++) {
-      let attribute = this.buff.readStruct([
-        [ 'attribute_name_index', SIZE_SHORT ],
-        [ 'attribute_length', SIZE_INT ],
-        [ '$info', 'attribute_length' ],
-      ]);
-
-      cls.attributes.push(attribute);
+      cls.attributes.push(this.buff.readStruct(
+        Structures.class_file.attribute
+      ));
     }
 
     // resolve attrs
