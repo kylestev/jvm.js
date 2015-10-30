@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import {NiceBuffer} from './NiceBuffer';
 
 export const OPCODE_TO_NAME = [
   'NOP', 'ACONST_NULL', 'ICONST_M1', 'ICONST_0',
@@ -274,11 +275,21 @@ export function createInstruction(idx, opcode, wide) {
 export function injectInstructions(method) {
   let code = _.find(method.attribute_info, { name: 'Code' });
   let wide = false;
-  code.instructions = _.map(code.info.data, (opcode, idx) => {
+  let buffer = new NiceBuffer(new Buffer(code.info.data));
+  code.instructions = [];
+  while (buffer.pos < code.info.data.length) {
+    let idx = code.instructions.length;
+    let opcode = buffer.byte();
     let instruction = createInstruction(idx, opcode, wide);
+    instruction.read(buffer);
     wide = (opcode === NAME_TO_OPCODE['WIDE']);
-    return instruction;
-  });
+    code.instructions.push(instruction);
+  }
+  // code.instructions = _.map(code.info.data, (opcode, idx) => {
+  //   let instruction = createInstruction(idx, opcode, wide);
+  //   wide = (opcode === NAME_TO_OPCODE['WIDE']);
+  //   return instruction;
+  // });
 
   return method;
 }

@@ -6,6 +6,7 @@ export default class AbstractInstruction {
     this.idx = idx;
     this.opcode = opcode;
     this.wide = false;
+    this.offset = 0;
   }
 
   get opname() {
@@ -14,5 +15,13 @@ export default class AbstractInstruction {
 
   get size() {
     return 1;
+  }
+
+  read(buffer) {
+    this.offset = (buffer.pos - 1);
+  }
+
+  write(buffer) {
+    
   }
 }
