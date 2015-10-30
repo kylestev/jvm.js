@@ -1,41 +1,41 @@
 {
-    "class_file": {
-        "interface": [
-            [ "class_index", 2 ]
-          ],
+  "class_file": {
+    "interface": [
+      [ "class_index", 2 ]
+    ],
 
-        "field": [
-            [ "access_flags", 2 ],
-            [ "name_index", 2 ],
-            [ "descriptor_index", 2 ],
-            [ "attribute_count", 2 ],
-            [ "@attribute_info|attribute_count", {
-              "struct": [
-                [ "attribute_name_index", 2 ],
-                [ "attribute_length", 4 ],
-                [ "$info", "attribute_length" ]
-              ]
-            }]
-          ],
+    "field": [
+      [ "access_flags", 2 ],
+      [ "name_index", 2 ],
+      [ "descriptor_index", 2 ],
+      [ "attribute_count", 2 ],
+      [ "@attribute_info|attribute_count", {
+        "struct": [
+          [ "attribute_name_index", 2 ],
+          [ "attribute_length", 4 ],
+          [ "$info", "attribute_length" ]
+        ]
+      }]
+    ],
 
-        "method": [
-            [ "access_flags", 2 ],
-            [ "name_index", 2 ],
-            [ "descriptor_index", 2 ],
-            [ "attributes_count", 2 ],
-            [ "@attribute_info|attributes_count", {
-              "struct": [
-                [ "attribute_name_index", 2 ],
-                [ "attribute_length", 4 ],
-                [ "$info", "attribute_length" ]
-              ]
-            }]
-          ],
+    "method": [
+      [ "access_flags", 2 ],
+      [ "name_index", 2 ],
+      [ "descriptor_index", 2 ],
+      [ "attributes_count", 2 ],
+      [ "@attribute_info|attributes_count", {
+        "struct": [
+          [ "attribute_name_index", 2 ],
+          [ "attribute_length", 4 ],
+          [ "$info", "attribute_length" ]
+        ]
+      }]
+    ],
 
-        "attribute": [
-            [ "attribute_name_index", 2 ],
-            [ "attribute_length", 4 ],
-            [ "$info", "attribute_length" ]
-      ]
-    }
+    "attribute": [
+      [ "attribute_name_index", 2 ],
+      [ "attribute_length", 4 ],
+      [ "$info", "attribute_length" ]
+    ]
+  }
 }
