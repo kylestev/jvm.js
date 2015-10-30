@@ -1,0 +1,235 @@
+import * as _ from 'lodash';
+
+export const OPCODE_TO_NAME = [
+  'NOP', 'ACONST_NULL', 'ICONST_M1', 'ICONST_0',
+  'ICONST_1', 'ICONST_2', 'ICONST_3', 'ICONST_4',
+  'ICONST_5', 'LCONST_0', 'LCONST_1', 'FCONST_0',
+  'FCONST_1', 'FCONST_2', 'DCONST_0', 'DCONST_1',
+  'BIPUSH', 'SIPUSH', 'LDC', '', '', 'ILOAD',
+  'LLOAD', 'FLOAD', 'DLOAD', 'ALOAD', '', '', '',
+  '', '', '', '', '', '', '', '', '', '', '', '',
+  '', '', '', '', '', 'IALOAD', 'LALOAD', 'FALOAD',
+  'DALOAD', 'AALOAD', 'BALOAD', 'CALOAD', 'SALOAD',
+  'ISTORE', 'LSTORE', 'FSTORE', 'DSTORE', 'ASTORE',
+  '', '', '', '', '', '', '', '', '', '', '', '',
+  '', '', '', '', '', '', '', '', 'IASTORE',
+  'LASTORE', 'FASTORE', 'DASTORE', 'AASTORE', 'BASTORE',
+  'CASTORE', 'SASTORE', 'POP', 'POP2', 'DUP', 'DUP_X1',
+  'DUP_X2', 'DUP2', 'DUP2_X1', 'DUP2_X2', 'SWAP',
+  'IADD', 'LADD', 'FADD', 'DADD', 'ISUB', 'LSUB',
+  'FSUB', 'DSUB', 'IMUL', 'LMUL', 'FMUL', 'DMUL',
+  'IDIV', 'LDIV', 'FDIV', 'DDIV', 'IREM', 'LREM',
+  'FREM', 'DREM', 'INEG', 'LNEG', 'FNEG', 'DNEG',
+  'ISHL', 'LSHL', 'ISHR', 'LSHR', 'IUSHR', 'LUSHR',
+  'IAND', 'LAND', 'IOR', 'LOR', 'IXOR', 'LXOR',
+  'IINC', 'I2L', 'I2F', 'I2D', 'L2I', 'L2F', 'L2D',
+  'F2I', 'F2L', 'F2D', 'D2I', 'D2L', 'D2F', 'I2B',
+  'I2C', 'I2S', 'LCMP', 'FCMPL', 'FCMPG', 'DCMPL',
+  'DCMPG', 'IFEQ', 'IFNE', 'IFLT', 'IFGE', 'IFGT',
+  'IFLE', 'IF_ICMPEQ', 'IF_ICMPNE', 'IF_ICMPLT',
+  'IF_ICMPGE', 'IF_ICMPGT', 'IF_ICMPLE', 'IF_ACMPEQ',
+  'IF_ACMPNE', 'GOTO', 'JSR', 'RET', 'TABLESWITCH',
+  'LOOKUPSWITCH', 'IRETURN', 'LRETURN', 'FRETURN',
+  'DRETURN', 'ARETURN', 'RETURN', 'GETSTATIC',
+  'PUTSTATIC', 'GETFIELD', 'PUTFIELD', 'INVOKEVIRTUAL',
+  'INVOKESPECIAL', 'INVOKESTATIC', 'INVOKEINTERFACE',
+  'INVOKEDYNAMIC', 'NEW', 'NEWARRAY', 'ANEWARRAY',
+  'ARRAYLENGTH', 'ATHROW', 'CHECKCAST', 'INSTANCEOF',
+  'MONITORENTER', 'MONITOREXIT', '', 'MULTIANEWARRAY',
+  'IFNULL', 'IFNONNULL'
+];
+
+export const NAME_TO_OPCODE = _.invert(OPCODE_TO_NAME);
+
+export const AbstractInstruction = require('../jvm/insn/AbstractInstruction');
+export const VariableInstruction = require('../jvm/insn/VariableInstruction');
+export const ArithmeticInstruction = require('../jvm/insn/ArithmeticInstruction');
+export const IncrementInstruction = require('../jvm/insn/IncrementInstruction');
+export const CastInstruction = require('../jvm/insn/CastInstruction');
+export const ImmediateByteInstruction = require('../jvm/insn/ImmediateByteInstruction');
+export const ImmediateShortInstruction = require('../jvm/insn/ImmediateByteInstruction');
+export const MethodInstruction = require('../jvm/insn/MethodInstruction');
+export const ConstantInstruction = require('../jvm/insn/ConstantInstruction');
+export const FieldInstruction = require('../jvm/insn/FieldInstruction');
+export const PushInstruction = require('../jvm/insn/PushInstruction');
+export const TypeInstruction = require('../jvm/insn/TypeInstruction');
+export const BranchInstruction = require('../jvm/insn/BranchInstruction');
+export const WideBranchInstruction = require('../jvm/insn/WideBranchInstruction');
+export const TableSwitchInstruction = require('../jvm/insn/TableSwitchInstruction');
+export const LookupSwitchInstruction = require('../jvm/insn/LookupSwitchInstruction');
+export const InvokeInterfaceInstruction = require('../jvm/insn/InvokeInterfaceInstruction');
+export const InvokeDynamicInstruction = require('../jvm/insn/InvokeDynamicInstruction');
+export const MultianewarrayInstruction = require('../jvm/insn/MultianewarrayInstruction');
+
+export const INSTRUCTION_INDICES = [
+  { // ICONST_M1 - DCONST_1
+    low_opcode_index: 0x02,
+    high_opcode_index: 0x0f,
+    type: VariableInstruction
+  },
+  { // ILOAD_0 - SALOAD
+    low_opcode_index: 0x1a,
+    high_opcode_index: 0x35,
+    type: VariableInstruction
+  },
+  { // ISTORE_0 - SASTORE
+    low_opcode_index: 0x3b,
+    high_opcode_index: 0x56,
+    type: VariableInstruction
+  },
+  { // IADD - LXOR
+    low_opcode_index: 0x60,
+    high_opcode_index: 0x83,
+    type: ArithmeticInstruction
+  },
+  { // IINC (subject to 'wide')
+    low_opcode_index: 0x84,
+    high_opcode_index: 0x84,
+    type: IncrementInstruction
+  },
+  { // I2L - I2S
+    low_opcode_index: 0x85,
+    high_opcode_index: 0x93,
+    type: CastInstruction
+  },
+  { // ILOAD - ALOAD (subject to 'wide')
+    low_opcode_index: 0x15,
+    high_opcode_index: 0x19,
+    type: VariableInstruction
+  },
+  { // ISTORE - ASTORE (subject to 'wide')
+    low_opcode_index: 0x36,
+    high_opcode_index: 0x3a,
+    type: VariableInstruction
+  },
+  { // RET (subject to 'wide')
+    low_opcode_index: 0xa9,
+    high_opcode_index: 0xa9,
+    type: ImmediateByteInstruction
+  },
+  { // NEWARRAY (subject to 'wide')
+    low_opcode_index: 0xbc,
+    high_opcode_index: 0xbc,
+    type: ImmediateByteInstruction
+  },
+  { // INVOKEVIRTUAL - INVOKESTATIC
+    low_opcode_index: 0xb6,
+    high_opcode_index: 0xb8,
+    type: MethodInstruction
+  },
+  { // LDC_W - LDC2_W
+    low_opcode_index: 0x13,
+    high_opcode_index: 0x14,
+    type: ConstantInstruction
+  },
+  { // GETSTATIC - PUTFIELD
+    low_opcode_index: 0xb2,
+    high_opcode_index: 0xb5,
+    type: FieldInstruction
+  },
+  { // LDC
+    low_opcode_index: 0x12,
+    high_opcode_index: 0x12,
+    type: ConstantInstruction
+  },
+  { // BIPUSH
+    low_opcode_index: 0x10,
+    high_opcode_index: 0x10,
+    type: PushInstruction
+  },
+  { // SIPUSH
+    low_opcode_index: 0x11,
+    high_opcode_index: 0x11,
+    type: PushInstruction
+  },
+  { // NEW
+    low_opcode_index: 0xbb,
+    high_opcode_index: 0xbb,
+    type: TypeInstruction
+  },
+  { // ANEWARRAY
+    low_opcode_index: 0xbd,
+    high_opcode_index: 0xbd,
+    type: TypeInstruction
+  },
+  { // CHECKCAST - INSTANCEOF
+    low_opcode_index: 0xc0,
+    high_opcode_index: 0xc1,
+    type: TypeInstruction
+  },
+  { // IFEQ - JSR
+    low_opcode_index: 0x99,
+    high_opcode_index: 0xa8,
+    type: BranchInstruction
+  },
+  { // IFNULL - IFNONNULL
+    low_opcode_index: 0xc6,
+    high_opcode_index: 0xc7,
+    type: BranchInstruction
+  },
+  { // GOTO_W - JSR_W
+    low_opcode_index: 0xc8,
+    high_opcode_index: 0xc9,
+    type: WideBranchInstruction
+  },
+  { // TABLESWITCH
+    low_opcode_index: 0xaa,
+    high_opcode_index: 0xaa,
+    type: TableSwitchInstruction
+  },
+  { // LOOKUPSWITCH
+    low_opcode_index: 0xab,
+    high_opcode_index: 0xab,
+    type: LookupSwitchInstruction
+  },
+  { // INVOKEINTERFACE
+    low_opcode_index: 0xb9,
+    high_opcode_index: 0xb9,
+    type: InvokeInterfaceInstruction
+  },
+  { // INVOKEDYNAMIC
+    low_opcode_index: 0xba,
+    high_opcode_index: 0xba,
+    type: InvokeDynamicInstruction
+  },
+  { // MULTIANEWARRAY
+    low_opcode_index: 0xc5,
+    high_opcode_index: 0xc5,
+    type: MultianewarrayInstruction
+  }
+];
+
+export function getInstructionType(opcode) {
+  let type = AbstractInstruction;
+
+  let match = _.find(INSTRUCTION_INDICES, (indices) => {
+    return (opcode >= indices.low_opcode_index &&
+            opcode <= indices.high_opcode_index);
+  });
+
+  if (match) {
+    return match.type;
+  }
+
+  return type;
+}
+
+export function createInstruction(idx, opcode) {
+  let type = getInstructionType(opcode);
+  let instance = new type(idx, opcode);
+  console.log(OPCODE_TO_NAME[opcode]);
+  // if (instance.constructor.name == 'VariableInstruction') {
+  //   console.log(instance.opcode + ' - ' + instance.opname + ' - ' + instance.var);
+  // }
+  return instance;
+}
+
+export function injectInstructions(method) {
+  console.log(method['decoded']['name']);
+  let code = _.find(method.attribute_info, { name: 'Code' });
+  code.instructions = _.map(code.info.data, (opcode, idx) => {
+    return createInstruction(idx, opcode);
+  });
+
+  return method;
+}

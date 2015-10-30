@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import { ConstantPool } from '../jvm/ConstantPool';
+import { injectInstructions } from '../parsers/BytecodeInstructions';
 
 _.mixin({
   toMap: function (map) {
@@ -88,6 +89,8 @@ export class ClassFile {
         name: this.string(clone.name_index),
         descriptor: this.string(clone.descriptor_index)
       };
+
+      clone = injectInstructions(clone);
 
       struct.methods.push(clone);
     });
