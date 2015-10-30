@@ -23,6 +23,10 @@ export class ClassFile {
     this.attributes = [];
   }
 
+  get pool() {
+    return this.constantPool;
+  }
+
   property(prop, value = null) {
     if (value === null) {
       return this.props.get(prop);
