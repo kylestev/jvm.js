@@ -1,9 +1,10 @@
 {
-   "scripts": {
+  "scripts": {
     "lint": "eslint src"
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
+    "cjson": "^0.3.2",
     "lodash": "^3.10.1",
     "promisify-node": "^0.2.1"
   },
