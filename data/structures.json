@@ -4,7 +4,122 @@
     "SIZE_SHORT": 2,
     "SIZE_INT": 4
   },
+
   "class_file": {
+
+    "constant_pool": {
+      "lookup": {
+        "1": { "$ref": "#/class_file/constant_pool/defs/utf8" },
+        "3": { "$ref": "#/class_file/constant_pool/defs/integer" },
+        "4": { "$ref": "#/class_file/constant_pool/defs/float" },
+        "5": { "$ref": "#/class_file/constant_pool/defs/long" },
+        "6": { "$ref": "#/class_file/constant_pool/defs/double" },
+        "7": { "$ref": "#/class_file/constant_pool/defs/class" },
+        "8": { "$ref": "#/class_file/constant_pool/defs/string" },
+        "9": { "$ref": "#/class_file/constant_pool/defs/field_ref" },
+        "10": { "$ref": "#/class_file/constant_pool/defs/method_ref" },
+        "11": { "$ref": "#/class_file/constant_pool/defs/interface_method_ref" },
+        "12": { "$ref": "#/class_file/constant_pool/defs/name_and_type" },
+        "15": { "$ref": "#/class_file/constant_pool/defs/method_handle" },
+        "16": { "$ref": "#/class_file/constant_pool/defs/method_type" },
+        "18": { "$ref": "#/class_file/constant_pool/defs/invoke_dynamic" }
+      },
+
+      "defs": {
+        "class": {
+          "attrs": [
+            [ "name_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        },
+
+        "field_ref": {
+          "attrs": [
+            [ "class_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ],
+            [ "name_and_type_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        },
+
+        "method_ref": {
+          "attrs": [
+            [ "class_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ],
+            [ "name_and_type_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        },
+
+        "interface_method_ref": {
+          "attrs": [
+            [ "class_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ],
+            [ "name_and_type_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        },
+
+        "string": {
+          "attrs": [
+            [ "string_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        },
+
+        "integer": {
+          "attrs": [
+            [ "bytes", { "$ref": "#/data_lengths/SIZE_INT" } ]
+          ]
+        },
+
+        "float": {
+          "attrs": [
+            [ "bytes", { "$ref": "#/data_lengths/SIZE_INT" } ]
+          ]
+        },
+
+        "long": {
+          "attrs": [
+            [ "high_bytes", { "$ref": "#/data_lengths/SIZE_INT" } ],
+            [ "low_bytes", { "$ref": "#/data_lengths/SIZE_INT" } ]
+          ]
+        },
+
+        "double": {
+          "attrs": [
+            [ "high_bytes", { "$ref": "#/data_lengths/SIZE_INT" } ],
+            [ "low_bytes", { "$ref": "#/data_lengths/SIZE_INT" } ]
+          ]
+        },
+
+        "name_and_type": {
+          "attrs": [
+            [ "name_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ],
+            [ "descriptor_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        },
+
+        "utf8": {
+          "attrs": [
+            [ "length", { "$ref": "#/data_lengths/SIZE_SHORT" } ],
+            [ "$bytes", "length" ]
+          ]
+        },
+
+        "method_handle": {
+          "attrs": [
+            [ "reference_kind", { "$ref": "#/data_lengths/SIZE_BYTE" } ],
+            [ "reference_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        },
+
+        "method_type": {
+          "attrs": [
+            [ "descriptor_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        },
+
+        "invoke_dynamic": {
+          "attrs": [
+            [ "bootstrap_method_attr_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ],
+            [ "name_and_type_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ]
+          ]
+        }
+      }
+    },
 
     "attribute": [
       [ "attribute_name_index", { "$ref": "#/data_lengths/SIZE_SHORT" } ],

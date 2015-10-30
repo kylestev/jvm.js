@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as Structure from './Structures';
 import {SIZE_INT, SIZE_SHORT, SIZE_BYTE} from '../parsers/NiceBuffer';
 
 const CLASS_POOL_CLASS = 7;
@@ -16,104 +17,8 @@ const CLASS_POOL_METHOD_HANDLE = 15;
 const CLASS_POOL_METHOD_TYPE = 16;
 const CLASS_POOL_INVOKE_DYNAMIC = 18;
 
-const ConstantPoolTypes = [
-  {
-    index: CLASS_POOL_CLASS,
-    attrs: [
-      [ 'name_index', SIZE_SHORT ]
-    ],
-  },
-  {
-    index: CLASS_POOL_FIELD_REF,
-    attrs: [
-      [ 'class_index', SIZE_SHORT ],
-      [ 'name_and_type_index', SIZE_SHORT ]
-    ]
-  },
-  {
-    index: CLASS_POOL_METHOD_REF,
-    attrs: [
-      [ 'class_index', SIZE_SHORT ],
-      [ 'name_and_type_index', SIZE_SHORT ]
-    ]
-  },
-  {
-    index: CLASS_POOL_INTERFACE_METHOD_REF,
-    attrs: [
-      [ 'class_index', SIZE_SHORT ],
-      [ 'name_and_type_index', SIZE_SHORT ]
-    ]
-  },
-  {
-    index: CLASS_POOL_STRING,
-    attrs: [
-      [ 'string_index', SIZE_SHORT ]
-    ],
-  },
-  {
-    index: CLASS_POOL_INTEGER,
-    attrs: [
-      [ 'bytes', SIZE_INT ]
-    ],
-  },
-  {
-    index: CLASS_POOL_FLOAT,
-    attrs: [
-      [ 'bytes', SIZE_INT ]
-    ],
-  },
-  {
-    index: CLASS_POOL_LONG,
-    attrs: [
-      [ 'high_bytes', SIZE_INT ],
-      [ 'low_bytes', SIZE_INT ]
-    ]
-  },
-  {
-    index: CLASS_POOL_DOUBLE,
-    attrs: [
-      [ 'high_bytes', SIZE_INT ],
-      [ 'low_bytes', SIZE_INT ]
-    ]
-  },
-  {
-    index: CLASS_POOL_NAME_AND_TYPE,
-    attrs: [
-      [ 'name_index', SIZE_SHORT ],
-      [ 'descriptor_index', SIZE_SHORT ]
-    ]
-  },
-  {
-    index: CLASS_POOL_UTF8,
-    attrs: [
-      [ 'length', SIZE_SHORT ],
-      [ '$bytes', 'length' ]
-    ]
-  },
-  {
-    index: CLASS_POOL_METHOD_HANDLE,
-    attrs: [
-      [ 'reference_kind', SIZE_BYTE ],
-      [ 'reference_index', SIZE_SHORT ]
-    ]
-  },
-  {
-    index: CLASS_POOL_METHOD_TYPE,
-    attrs: [
-      [ 'descriptor_index', SIZE_SHORT ]
-    ],
-  },
-  {
-    index: CLASS_POOL_INVOKE_DYNAMIC,
-    attrs: [
-      [ 'bootstrap_method_attr_index', SIZE_SHORT ],
-      [ 'name_and_type_index', SIZE_SHORT ]
-    ]
-  },
-];
-
-let getContantPoolStruct = _.memoize((index) => {
-  return _.find(ConstantPoolTypes, { index }).attrs;
+let getConstantPoolStructure = _.memoize((index) => {
+  return Structure.get(['class_file', 'constant_pool', 'lookup', index]).attrs;
 });
 
 export class ConstantPool {
@@ -136,7 +41,7 @@ export class ConstantPool {
   readFromBuffer(buff) {
     let tag = buff.byte();
     let instance = { tag };
-    let struct = getContantPoolStruct(tag);
+    let struct = getConstantPoolStructure(tag);
 
     _.each(struct, (lookup) => {
       let [key, len] = lookup;
