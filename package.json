@@ -1,9 +1,12 @@
 {
-   "scripts": {
-    "lint": "eslint src"
+  "scripts": {
+    "lint": "eslint src",
+    "test": "./node_modules/.bin/eslint src"
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
+    "cjson": "^0.3.2",
+    "json-refs": "^1.1.2",
     "lodash": "^3.10.1",
     "promisify-node": "^0.2.1"
   },

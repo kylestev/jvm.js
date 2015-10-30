@@ -1,8 +1,8 @@
 const _ = require('lodash');
-const bytecode = require('./bytecode');
+const core = require('./core');
 let s = Date.now();
 
-bytecode.createLoader()
+core.createLoader()
   .then((loader) => {
     // return loader.loadJar('/Users/kylestevenson/Downloads/jars/37.jar')
     return loader.loadJar('/Users/kylestevenson/hexbotee-updater/Test Jar.jar')

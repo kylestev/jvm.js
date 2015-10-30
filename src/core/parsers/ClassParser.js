@@ -1,13 +1,14 @@
 import { NiceBuffer } from './NiceBuffer';
 import { ClassFile } from '../jvm/ClassFile';
+import * as Structures from '../jvm/Structures';
 import { AccessFlags } from '../jvm/AccessFlags';
 import {SIZE_INT, SIZE_SHORT, SIZE_BYTE} from '../parsers/NiceBuffer';
-
-const Structures = require('../../../data/structures.json');
 
 const Errors = require('../../Errors');
 const _ = require('../../util/lodash');
 // const Attributes = require('../jvm/Attributes');
+
+const JVM_CLASS_FILE_MAGIC_NUMBER = 0xcafebabe;
 
 export default class ClassParser {
   constructor(name, buff) {
@@ -19,21 +20,24 @@ export default class ClassParser {
     return new Promise((resolve, reject) => {
       let cls = new ClassFile(this.name);
 
-      try {
-        this._parseHeaders(cls);
-        this._parseInterfaces(cls);
-        this._parseFields(cls);
-        this._parseMethods(cls);
-        this._parseAttributes(cls);
-        // console.log(
-        //   _.json(cls.dump())
-        // );
-      } catch (err) {
-        console.log(err)
-        reject(err);
-      }
+      Structures.load()
+        .then(() => {
+          try {
+            this._parseHeaders(cls);
+            this._parseInterfaces(cls);
+            this._parseFields(cls);
+            this._parseMethods(cls);
+            this._parseAttributes(cls);
+            console.log(
+              _.json(cls.dump())
+            );
+          } catch (err) {
+            console.log(err)
+            reject(err);
+          }
 
-      resolve(cls);
+          resolve(cls);
+        });
     }).catch((err) => console.error.bind(console));
   }
 
@@ -41,7 +45,7 @@ export default class ClassParser {
     let magic = this.buff.int();
     cls.property('magic', magic);
 
-    if (magic != 0xcafebabe) {
+    if (magic != JVM_CLASS_FILE_MAGIC_NUMBER) {
       throw Errors.Parsing.InvalidClassFileFormat;
     }
 
@@ -68,7 +72,7 @@ export default class ClassParser {
     cls.property(pluralProp + '_count', length);
     for (let idx = 0; idx < length; idx++) {
       cls[pluralProp].push(this.buff.readStruct(
-        Structures.class_file[prop]
+        Structures.get(['class_file', prop])
       ));
     }
   }
