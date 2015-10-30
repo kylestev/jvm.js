@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "./node_modules/.bin/eslint src"
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
