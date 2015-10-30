@@ -9,6 +9,8 @@ const Errors = require('../../Errors');
 const _ = require('../../util/lodash');
 // const Attributes = require('../jvm/Attributes');
 
+const JVM_CLASS_FILE_MAGIC_NUMBER = 0xcafebabe;
+
 export default class ClassParser {
   constructor(name, buff) {
     this.name = name;
@@ -41,7 +43,7 @@ export default class ClassParser {
     let magic = this.buff.int();
     cls.property('magic', magic);
 
-    if (magic != 0xcafebabe) {
+    if (magic != JVM_CLASS_FILE_MAGIC_NUMBER) {
       throw Errors.Parsing.InvalidClassFileFormat;
     }
 
