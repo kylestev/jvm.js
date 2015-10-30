@@ -1,19 +1,25 @@
 import * as _ from 'lodash';
 
 const AbstractInstruction = require('./AbstractInstruction');
+const ImmediateByteInstruction = require('./ImmediateByteInstruction');
 
 export default class VariableInstruction extends AbstractInstruction {
 
-  constructor(idx, opcode) {
-    super(idx, opcode);
+  constructor(instruction) {
+    super(instruction.idx, instruction.opcode);
+    this.instruction = instruction;
   }
 
   get var() {
-    if (this.opname.includes('M1')) {
-        return -1;
-    } else if (this.opname.includes('_')) {
-        return parseInt(_.last(this.opname.split('_')));
+    if (this.instruction.constructor.name === 'ImmediateByteInstruction') {
+      return this.instruction.val;
+    } else {
+      if (this.instruction.opname.includes('M1')) {
+          return -1;
+      } else if (this.instruction.opname.includes('_')) {
+          return parseInt(_.last(this.instruction.opname.split('_')));
+      }
+      return 0;
     }
-    return 0;
   }
 }

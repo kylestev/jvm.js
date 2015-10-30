@@ -65,170 +65,219 @@ export const INSTRUCTION_INDICES = [
   { // ICONST_M1 - DCONST_1
     low_opcode_index: 0x02,
     high_opcode_index: 0x0f,
-    type: VariableInstruction
+    type: AbstractInstruction,
+    wrap: VariableInstruction,
+    subject_to_wide: false
   },
   { // ILOAD_0 - SALOAD
     low_opcode_index: 0x1a,
     high_opcode_index: 0x35,
-    type: VariableInstruction
+    type: AbstractInstruction,
+    wrap: VariableInstruction,
+    subject_to_wide: false
   },
   { // ISTORE_0 - SASTORE
     low_opcode_index: 0x3b,
     high_opcode_index: 0x56,
-    type: VariableInstruction
+    type: AbstractInstruction,
+    wrap: VariableInstruction,
+    subject_to_wide: false
   },
   { // IADD - LXOR
     low_opcode_index: 0x60,
     high_opcode_index: 0x83,
-    type: ArithmeticInstruction
+    type: AbstractInstruction,
+    wrap: ArithmeticInstruction,
+    subject_to_wide: false
   },
   { // IINC (subject to 'wide')
     low_opcode_index: 0x84,
     high_opcode_index: 0x84,
-    type: IncrementInstruction
+    type: IncrementInstruction,
+    subject_to_wide: true
   },
   { // I2L - I2S
     low_opcode_index: 0x85,
     high_opcode_index: 0x93,
-    type: CastInstruction
+    type: AbstractInstruction,
+    wrap: CastInstruction,
+    subject_to_wide: false
   },
   { // ILOAD - ALOAD (subject to 'wide')
     low_opcode_index: 0x15,
     high_opcode_index: 0x19,
-    type: VariableInstruction
+    type: ImmediateByteInstruction,
+    wrap: VariableInstruction,
+    subject_to_wide: true
   },
   { // ISTORE - ASTORE (subject to 'wide')
     low_opcode_index: 0x36,
     high_opcode_index: 0x3a,
-    type: VariableInstruction
+    type: ImmediateByteInstruction,
+    wrap: VariableInstruction,
+    subject_to_wide: true
   },
   { // RET (subject to 'wide')
     low_opcode_index: 0xa9,
     high_opcode_index: 0xa9,
-    type: ImmediateByteInstruction
+    type: ImmediateByteInstruction,
+    subject_to_wide: true
   },
   { // NEWARRAY (subject to 'wide')
     low_opcode_index: 0xbc,
     high_opcode_index: 0xbc,
-    type: ImmediateByteInstruction
+    type: ImmediateByteInstruction,
+    subject_to_wide: true
   },
   { // INVOKEVIRTUAL - INVOKESTATIC
     low_opcode_index: 0xb6,
     high_opcode_index: 0xb8,
-    type: MethodInstruction
+    type: MethodInstruction,
+    subject_to_wide: false
   },
   { // LDC_W - LDC2_W
     low_opcode_index: 0x13,
     high_opcode_index: 0x14,
-    type: ConstantInstruction
+    type: ImmediateShortInstruction,
+    wrap: ConstantInstruction,
+    subject_to_wide: false
   },
   { // GETSTATIC - PUTFIELD
     low_opcode_index: 0xb2,
     high_opcode_index: 0xb5,
-    type: FieldInstruction
+    type: FieldInstruction,
+    subject_to_wide: false
   },
-  { // LDC
+  { // LDC (subject to 'wide')
     low_opcode_index: 0x12,
     high_opcode_index: 0x12,
-    type: ConstantInstruction
+    type: ImmediateByteInstruction,
+    wrap: ConstantInstruction,
+    subject_to_wide: true
   },
-  { // BIPUSH
+  { // BIPUSH (subject to 'wide')
     low_opcode_index: 0x10,
     high_opcode_index: 0x10,
-    type: PushInstruction
+    type: ImmediateByteInstruction,
+    wrap: PushInstruction,
+    subject_to_wide: true
   },
-  { // SIPUSH
+  { // SIPUSH (subject to 'wide')
     low_opcode_index: 0x11,
     high_opcode_index: 0x11,
-    type: PushInstruction
+    type: ImmediateShortInstruction,
+    wrap: PushInstruction,
+    subject_to_wide: true
   },
   { // NEW
     low_opcode_index: 0xbb,
     high_opcode_index: 0xbb,
-    type: TypeInstruction
+    type: TypeInstruction,
+    subject_to_wide: false
   },
   { // ANEWARRAY
     low_opcode_index: 0xbd,
     high_opcode_index: 0xbd,
-    type: TypeInstruction
+    type: TypeInstruction,
+    subject_to_wide: false
   },
   { // CHECKCAST - INSTANCEOF
     low_opcode_index: 0xc0,
     high_opcode_index: 0xc1,
-    type: TypeInstruction
+    type: TypeInstruction,
+    subject_to_wide: false
   },
   { // IFEQ - JSR
     low_opcode_index: 0x99,
     high_opcode_index: 0xa8,
-    type: BranchInstruction
+    type: BranchInstruction,
+    subject_to_wide: false
   },
   { // IFNULL - IFNONNULL
     low_opcode_index: 0xc6,
     high_opcode_index: 0xc7,
-    type: BranchInstruction
+    type: BranchInstruction,
+    subject_to_wide: false
   },
   { // GOTO_W - JSR_W
     low_opcode_index: 0xc8,
     high_opcode_index: 0xc9,
-    type: WideBranchInstruction
+    type: WideBranchInstruction,
+    subject_to_wide: false
   },
   { // TABLESWITCH
     low_opcode_index: 0xaa,
     high_opcode_index: 0xaa,
-    type: TableSwitchInstruction
+    type: TableSwitchInstruction,
+    subject_to_wide: false
   },
   { // LOOKUPSWITCH
     low_opcode_index: 0xab,
     high_opcode_index: 0xab,
-    type: LookupSwitchInstruction
+    type: LookupSwitchInstruction,
+    subject_to_wide: false
   },
   { // INVOKEINTERFACE
     low_opcode_index: 0xb9,
     high_opcode_index: 0xb9,
-    type: InvokeInterfaceInstruction
+    type: InvokeInterfaceInstruction,
+    subject_to_wide: false
   },
   { // INVOKEDYNAMIC
     low_opcode_index: 0xba,
     high_opcode_index: 0xba,
-    type: InvokeDynamicInstruction
+    type: InvokeDynamicInstruction,
+    subject_to_wide: false
   },
   { // MULTIANEWARRAY
     low_opcode_index: 0xc5,
     high_opcode_index: 0xc5,
-    type: MultianewarrayInstruction
+    type: MultianewarrayInstruction,
+    subject_to_wide: false
   }
 ];
 
-export function getInstructionType(opcode) {
-  let type = AbstractInstruction;
-
+export function getInstructionMatch(opcode) {
   let match = _.find(INSTRUCTION_INDICES, (indices) => {
     return (opcode >= indices.low_opcode_index &&
             opcode <= indices.high_opcode_index);
   });
 
   if (match) {
-    return match.type;
+    return match;
   }
 
-  return type;
+  return null;
 }
 
-export function createInstruction(idx, opcode) {
-  let type = getInstructionType(opcode);
-  let instance = new type(idx, opcode);
-  console.log(OPCODE_TO_NAME[opcode]);
-  // if (instance.constructor.name == 'VariableInstruction') {
-  //   console.log(instance.opcode + ' - ' + instance.opname + ' - ' + instance.var);
-  // }
+export function createInstruction(idx, opcode, wide) {
+  let match = getInstructionMatch(opcode);
+  let instance = null;
+  if (match !== null) {
+    if (match.subject_to_wide) {
+      instance = new match.type(idx, opcode, wide);
+    } else {
+      instance = new match.type(idx, opcode);
+    }
+    if (match.wrap && match.wrap !== null) {
+      instance = new match.wrap(instance);
+    }
+  } else {
+    instance = new AbstractInstruction(idx, opcode);
+  }
+  if (instance.constructor.name == 'VariableInstruction') {
+    console.log(instance.opcode + ' - ' + instance.opname + ' - ' + instance.var);
+  }
   return instance;
 }
 
 export function injectInstructions(method) {
-  console.log(method['decoded']['name']);
   let code = _.find(method.attribute_info, { name: 'Code' });
+  let wide = false;
   code.instructions = _.map(code.info.data, (opcode, idx) => {
-    return createInstruction(idx, opcode);
+    let instruction = createInstruction(idx, opcode, wide);
+    wide = (opcode === NAME_TO_OPCODE['WIDE']);
+    return instruction;
   });
 
   return method;
