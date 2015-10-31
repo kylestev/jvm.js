@@ -92,6 +92,14 @@ export class ClassFile {
 
       clone = injectInstructions(clone);
 
+      let code = _.find(clone.attribute_info, {name: 'Code'});
+      if (code !== null) {
+        _.each(code.instructions, instruction => {
+          delete instruction.previous;
+          delete instruction.next;
+        });
+      }
+
       struct.methods.push(clone);
     });
 
