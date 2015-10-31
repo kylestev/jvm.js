@@ -266,9 +266,6 @@ export function createInstruction(idx, opcode, wide) {
   } else {
     instance = new AbstractInstruction(idx, opcode);
   }
-  if (instance.constructor.name == 'VariableInstruction') {
-    console.log(instance.opcode + ' - ' + instance.opname + ' - ' + instance.var);
-  }
   return instance;
 }
 
@@ -277,13 +274,20 @@ export function injectInstructions(method) {
   let wide = false;
   let buffer = new NiceBuffer(new Buffer(code.info.data));
   code.instructions = [];
+  let current = null;
   while (buffer.pos < code.info.data.length) {
+    // let previous = current;
     let idx = code.instructions.length;
     let opcode = buffer.byte();
-    let instruction = createInstruction(idx, opcode, wide);
-    instruction.read(buffer);
+    console.log(OPCODE_TO_NAME[opcode]);
+    current = createInstruction(idx, opcode, wide);
+    current.read(buffer);
+    // if (previous != null) {
+    //   // current.previous = previous;
+    //   // previous.next = current;
+    // }
     wide = (opcode === NAME_TO_OPCODE['WIDE']);
-    code.instructions.push(instruction);
+    code.instructions.push(current);
   }
   // code.instructions = _.map(code.info.data, (opcode, idx) => {
   //   let instruction = createInstruction(idx, opcode, wide);

@@ -7,6 +7,8 @@ export default class AbstractInstruction {
     this.opcode = opcode;
     this.wide = false;
     this.offset = 0;
+    this.previous = null;
+    this.next = null;
   }
 
   get opname() {
