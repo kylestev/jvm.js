@@ -258,14 +258,15 @@ export function getInstructionMatch(opcode) {
     return match;
   }
 
-  return null;
+  return {
+    type: AbstractInstruction,
+    wrap: null,
+    subject_to_wide: false
+  };
 }
 
 export function createInstruction(idx, opcode, wide) {
   let match = getInstructionMatch(opcode);
-  if (match === null) {
-    return new AbstractInstruction(idx, opcode);
-  }
   let instance = null;
   if (match.subject_to_wide) {
     instance = new match.type(idx, opcode, wide);
@@ -278,28 +279,38 @@ export function createInstruction(idx, opcode, wide) {
   return instance;
 }
 
+function extractCodeFromMethod(method) {
+  let code = _.find(method.attribute_info, { attribute_name: 'Code' });
+  let attr = new JVMCodeAttribute(code);
+
+  return attr.decode().code;
+}
+
 export function injectInstructions(method) {
-  let attr = _.find(method.attribute_info, { name: 'Code' });
-  let wide = false;
-  let data = new JVMCodeAttribute();
-  let bytes = data.decode(attr);
-  let code = bytes.code;
+  let code = extractCodeFromMethod(method);
   let buffer = new NiceBuffer(new Buffer(code));
-  attr.instructions = [];
+
+  let wide = false;
   let current = null;
+  let instructions = [];
   while (buffer.pos < code.length) {
     let previous = current;
-    let idx = attr.instructions.length;
     let opcode = buffer.byte();
+    let idx = instructions.length;
+
     current = createInstruction(idx, opcode, wide);
     current.read(buffer);
+
     if (previous != null) {
       current.previous = previous;
       previous.next = current;
     }
-    wide = (opcode === NAME_TO_OPCODE['WIDE']);
-    attr.instructions.push(current);
+
+    wide = (opcode === NAME_TO_OPCODE.WIDE);
+    instructions.push(current);
   }
+
+  method.instructions = instructions;
 
   return method;
 }

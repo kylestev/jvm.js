@@ -90,14 +90,17 @@ export class ClassFile {
         descriptor: this.string(clone.descriptor_index)
       };
 
-      clone = injectInstructions(clone);
+      // no code will be present for abstract or synthetic methods.
+      if ((clone.access_flags & ACC_ABSTRACT) === 0 && (clone.access_flags & ACC_SYNTHETIC) === 0) {
+        clone = injectInstructions(clone);
 
-      let code = _.find(clone.attribute_info, {name: 'Code'});
-      if (code !== null) {
-        _.each(code.instructions, instruction => {
-          delete instruction.previous;
-          delete instruction.next;
-        });
+        let code = _.find(clone.attribute_info, { name: 'Code' });
+        if (code !== null) {
+          _.each(code.instructions, instruction => {
+            delete instruction.previous;
+            delete instruction.next;
+          });
+        }
       }
 
       struct.methods.push(clone);
