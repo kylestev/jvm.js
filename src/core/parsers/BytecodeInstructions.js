@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { NiceBuffer } from './NiceBuffer';
 import { JVMCodeAttribute } from '../jvm/Attributes';
-import { InstructionFactory, NAME_TO_OPCODE } from '../jvm/instructions/InstructionFactory';
+import { InstructionFactory, NAME_TO_OPCODE } from '../jvm/instructions';
 
 function extractCodeFromMethod(method) {
   let code = _.find(method.attribute_info, { attribute_name: 'Code' });

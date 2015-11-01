@@ -1,4 +1,4 @@
-import {OPCODE_TO_NAME} from '../../parsers/BytecodeInstructions';
+import { OPCODE_TO_NAME } from './Opcodes';
 
 export default class AbstractInstruction {
     
