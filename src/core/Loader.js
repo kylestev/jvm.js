@@ -113,6 +113,10 @@ export default class ClassLoader {
     return this._classes;
   }
 
+  [Symbol.iterator]() {
+    return this.classes.entries();
+  }
+
   getClass(clazz) {
     return this._classes.get(clazz);
   }
