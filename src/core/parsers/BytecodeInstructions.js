@@ -248,26 +248,18 @@ export const INSTRUCTION_INDICES = [
   }
 ];
 
-export function getInstructionMatch(opcode) {
-  let match = _.find(INSTRUCTION_INDICES, (indices) => {
-    return (opcode >= indices.low_opcode_index &&
-            opcode <= indices.high_opcode_index);
-  });
-
-  if (match) {
-    return match;
+let INSTRUCTION_INDICES_CACHE = {};
+_.each(INSTRUCTION_INDICES, (val) => {
+  for (let i = val.low_opcode_index; i <= val.high_opcode_index; i++) {
+    INSTRUCTION_INDICES_CACHE[i] = {
+      type: val.type, subject_to_wide: val.subject_to_wide
+    };
   }
-
-  return {
-    type: AbstractInstruction,
-    wrap: null,
-    subject_to_wide: false
-  };
-}
+});
 
 export function createInstruction(idx, opcode, wide) {
-  let match = getInstructionMatch(opcode);
   let instance = null;
+  let match = INSTRUCTION_INDICES_CACHE[opcode];
   if (match.subject_to_wide) {
     instance = new match.type(idx, opcode, wide);
   } else {
