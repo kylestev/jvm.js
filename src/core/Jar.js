@@ -26,24 +26,21 @@ export default class Jar {
       let jar = new AdmZip(this.file);
       Promise.all(
         jar.getEntries()
-          // map will replace the value (not the reference, though) of what we are
+          .filter((entry) => entry.entryName.endsWith('.class'))
+          // Map will replace the value (not the reference, though) of what we are
           // currently iterating over with the value returned from this method
           .map((entry) => {
-            let name = entry.entryName;
-            if (name.endsWith('.class')) {
-              name = name.replace('.class', '');
-              return new Promise((resolve, reject) => {
-                entry.getDataAsync((buffer, error) => {
-                  // this._classes[name] = buffer;
-                  this._classes.set(name, buffer);
-                  resolve();
-                });
-              })
-            }
+            let name = entry.entryName.replace('.class', '');
+            return new Promise((resolve, reject) => {
+              entry.getDataAsync((buffer, error) => {
+                this._classes.set(name, buffer);
+                resolve();
+              });
+            });
           })
       )
       .then(() => resolve(this));
-    })
+    });
   }
 
   get classBuffers() {
