@@ -24,7 +24,7 @@ export class JVMConstantValueAttribute extends JVMAttribute {
 
 export class JVMCodeAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     // TODO: parse bytecode
 
@@ -48,7 +48,7 @@ export class JVMCodeAttribute extends JVMAttribute {
 
 export class JVMStackMapTableAttribute extends JVMAttribute {
   // decode(attr) {
-  //   let buff = new NiceBuffer(attr.info);
+  //   let buff = new NiceBuffer(new Buffer(attr.info));
 
   //   return buff.readStruct([
   //     [ 'number_of_entries', SIZE_SHORT ],
@@ -66,7 +66,7 @@ export class JVMStackMapTableAttribute extends JVMAttribute {
 
 export class JVMExceptionsAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'number_of_exceptions', SIZE_SHORT ],
@@ -81,7 +81,7 @@ export class JVMExceptionsAttribute extends JVMAttribute {
 
 export class JVMInnerClassesAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'number_of_classes', SIZE_SHORT ],
@@ -99,7 +99,7 @@ export class JVMInnerClassesAttribute extends JVMAttribute {
 
 export class JVMEnclosingMethodAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'class_index', SIZE_SHORT ],
@@ -117,7 +117,7 @@ export class JVMSyntheticAttribute extends JVMAttribute {
 
 export class JVMSignatureAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'signature_index', SIZE_SHORT ]
@@ -127,7 +127,7 @@ export class JVMSignatureAttribute extends JVMAttribute {
 
 export class JVMSourceFileAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'sourcefile_index', SIZE_SHORT ]
@@ -135,19 +135,9 @@ export class JVMSourceFileAttribute extends JVMAttribute {
   }
 }
 
-export class JVMSourceDebugExtensionAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(attr.info);
-
-    return buff.readStruct([
-      [ 'debug_extension', attr.attribute_length ]
-    ]);
-  }
-}
-
 export class JVMLineNumberTableAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'debug_extension', attr.attribute_length ]
@@ -157,7 +147,7 @@ export class JVMLineNumberTableAttribute extends JVMAttribute {
 
 export class JVMSourceDebugExtensionAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'line_number_table_length', SIZE_SHORT ],
@@ -173,7 +163,7 @@ export class JVMSourceDebugExtensionAttribute extends JVMAttribute {
 
 export class JVMLocalVariableTableAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'local_variable_table_length', SIZE_SHORT ],
@@ -192,7 +182,7 @@ export class JVMLocalVariableTableAttribute extends JVMAttribute {
 
 export class JVMLocalVariableTypeTableAttribute extends JVMAttribute {
   decode(attr) {
-    let buff = new NiceBuffer(attr.info);
+    let buff = new NiceBuffer(new Buffer(attr.info));
 
     return buff.readStruct([
       [ 'local_variable_type_table_length', SIZE_SHORT ],
@@ -218,7 +208,7 @@ export class JVMDeprecatedAttribute extends JVMAttribute {
 
 export class JVMRuntimeVisibleAnnotationsAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
@@ -238,7 +228,7 @@ export class JVMRuntimeVisibleAnnotationsAttribute extends JVMAttribute {
 
 export class JVMRuntimeInvisibleAnnotationsAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
@@ -258,7 +248,7 @@ export class JVMRuntimeInvisibleAnnotationsAttribute extends JVMAttribute {
 
 export class JVMRuntimeVisibleParameterAnnotationsAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
@@ -278,7 +268,7 @@ export class JVMRuntimeVisibleParameterAnnotationsAttribute extends JVMAttribute
 
 export class JVMRuntimeInvisibleParameterAnnotationsAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
@@ -298,7 +288,7 @@ export class JVMRuntimeInvisibleParameterAnnotationsAttribute extends JVMAttribu
 
 export class JVMRuntimeVisibleTypeAnnotationsAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
@@ -318,7 +308,7 @@ export class JVMRuntimeVisibleTypeAnnotationsAttribute extends JVMAttribute {
 
 export class JVMRuntimeInvisibleTypeAnnotationsAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
@@ -338,7 +328,7 @@ export class JVMRuntimeInvisibleTypeAnnotationsAttribute extends JVMAttribute {
 
 export class JVMAnnotationDefaultAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
@@ -358,7 +348,7 @@ export class JVMAnnotationDefaultAttribute extends JVMAttribute {
 
 export class JVMBootstrapMethodsAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
@@ -378,7 +368,7 @@ export class JVMBootstrapMethodsAttribute extends JVMAttribute {
 
 export class JVMMethodParametersAttribute extends JVMAttribute {
   decode(attr) {
-    // let buff = new NiceBuffer(attr.info);
+    // let buff = new NiceBuffer(new Buffer(attr.info));
 
     // return buff.readStruct([
     //   [ 'num_annotations', SIZE_SHORT ],
