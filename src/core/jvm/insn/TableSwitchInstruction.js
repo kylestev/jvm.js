@@ -16,12 +16,15 @@ export default class TableSwitchInstruction extends PaddedInstruction {
 
   read(buffer) {
     super.read(buffer);
+
     this.defaultOffset = buffer.int();
     this.lowByte = buffer.int();
     this.highByte = buffer.int();
+
     this.jumpOffsets = [];
     let offsetCount = (highByte - lowByte + 1);
-    for (let i = 0; i < offsetCount; i++)
-        this.jumpOffsets[i] = buffer.int();
+    for (let i = 0; i < offsetCount; i++) {
+      this.jumpOffsets[i] = buffer.int();
+    }
   }
 }
