@@ -28,8 +28,6 @@ class MemberInfo {
   }
 
   hasFlag(flag) {
-    console.log(typeof flag);
-    console.log(((this.accessFlags & flag) !== 0));
     return ((this.accessFlags & flag) !== 0);
   }
 

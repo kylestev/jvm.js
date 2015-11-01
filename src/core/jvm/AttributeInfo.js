@@ -4,7 +4,7 @@ import { parseInstructions } from '../parsers/BytecodeInstructions';
 
 const AttributeDecoderLookup = {
   Code: function (method) {
-    if (this.hasMethodBody) {
+    if (method.hasNoMethodBody) {
       throw new Error('This method has no method body.');
     }
 
