@@ -18,6 +18,14 @@ class MethodInfo extends MemberInfo {
   get hasMethodBody() {
     return ! this.hasNoMethodBody;
   }
+
+  get instructions() {
+    let code = this.findAttributeByName('Code');
+    if (code) {
+      return code.decoded;
+    }
+    return [];
+  }
 }
 
 export default {
