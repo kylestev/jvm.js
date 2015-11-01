@@ -1,14 +1,17 @@
-const _ = require('lodash');
 const core = require('./core');
-let s = Date.now();
+
+let start = process.hrtime();
 
 core.createLoader()
   .then((loader) => {
-    // return loader.loadJar('/Users/kylestevenson/Downloads/jars/37.jar')
-    return loader.loadJar('/Users/tyler/Programming/test.jar')
+    return loader.loadJar(process.argv[2])
       .then((archive) => archive.unpack())
       .then((archive) => loader.loadClasses(archive))
-      .then(console.log.bind(console))
+      .then(() => {
+        let [elapsedSeconds, elapsedNanos] = process.hrtime(start);
+        let elapsed = (elapsedSeconds + (elapsedNanos / 1000000000));
+        console.log('parsed after', elapsed, 'seconds');
+      })
       .catch(console.error.bind(console));
   })
   .catch(console.error.bind(console));
