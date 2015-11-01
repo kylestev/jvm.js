@@ -29,20 +29,6 @@ export class NiceBuffer {
     return this[method]();
   }
 
-  // buff.readStruct([
-  //   [ 'access_flags', SIZE_SHORT ],
-  //   [ 'name_index', SIZE_SHORT ],
-  //   [ 'descriptor_index', SIZE_SHORT ],
-  //   [ 'attribute_count', SIZE_SHORT ],
-  //   [ '@attribute_info|attribute_count', {
-  //     struct: [
-  //       [ 'attribute_name_index', SIZE_SHORT ],
-  //       [ 'attribute_length', SIZE_SHORT ],
-  //       [ '$info', 'attribute_length' ],
-  //     ]
-  //   }],
-  // ]);
-
   readStruct(struct) {
     let instance = {};
 
@@ -85,6 +71,22 @@ export class NiceBuffer {
 
   int() {
     return this.buffer.readUInt32BE(this.move(SIZE_INT));
+  }
+
+  write(bytes) {
+    bytes.forEach((byte) => this.writeByte(byte));
+  }
+
+  writeByte(val) {
+    this.buffer.writeUInt8LE(val, this.move(SIZE_BYTE));
+  }
+
+  writeShort(val) {
+    this.buffer.writeUInt16LE(val, this.move(SIZE_SHORT));
+  }
+
+  writeInt(val) {
+    this.buffer.writeUInt32LE(val, this.move(SIZE_INT));
   }
 
   slice(len) {
