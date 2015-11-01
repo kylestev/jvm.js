@@ -3,7 +3,7 @@ const AbstractInstruction = require('./AbstractInstruction');
 export default class PushInstruction extends AbstractInstruction {
 
   constructor(instruction) {
-    super(instruction.idx, instructions.opcode);
+    super(instruction.idx, instruction.opcode);
     this.instruction = instruction;
   }
 
