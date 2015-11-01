@@ -1,4 +1,3 @@
 export default {
-  NiceBuffer: require('./NiceBuffer').NiceBuffer,
-  ClassParser: require('./ClassParser')
+  NiceBuffer: require('./NiceBuffer').NiceBuffer
 }

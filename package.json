@@ -5,8 +5,8 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
+    "binary-parser": "^1.1.5",
     "cjson": "^0.3.2",
-    "json-refs": "^1.1.2",
     "lodash": "^3.10.1",
     "promisify-node": "^0.2.1"
   },

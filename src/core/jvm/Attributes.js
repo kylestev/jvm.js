@@ -8,6 +8,10 @@ import {
 const Errors = require('../../Errors');
 
 export class JVMAttribute {
+  constructor(attrInfo) {
+    this.attrInfo = attrInfo;
+  }
+
   decode() {
     throw Errors.NotImplementedError;
   }
@@ -17,16 +21,22 @@ export class JVMAttribute {
  * @link https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.2
  */
 export class JVMConstantValueAttribute extends JVMAttribute {
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
   decode() {
     //
   }
 }
 
 export class JVMCodeAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // TODO: parse bytecode
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo.info);
 
     return buff.readStruct([
       [ 'max_stack', SIZE_SHORT ],
@@ -47,26 +57,22 @@ export class JVMCodeAttribute extends JVMAttribute {
 }
 
 export class JVMStackMapTableAttribute extends JVMAttribute {
-  // decode(attr) {
-  //   let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-  //   return buff.readStruct([
-  //     [ 'number_of_entries', SIZE_SHORT ],
-  //     [ '$stack_map_frame|number_of_entries', {
-  //       struct: [
-  //         [ 'start_pc', SIZE_SHORT ],
-  //         [ 'end_pc', SIZE_SHORT ],
-  //         [ 'handler_pc', SIZE_SHORT ],
-  //         [ 'catch_type', SIZE_SHORT ],
-  //       ]
-  //     }],
-  //   ]);
-  // }
+  decode() {
+    throw Errors.NotImplementedError;
+  }
 }
 
 export class JVMExceptionsAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'number_of_exceptions', SIZE_SHORT ],
@@ -80,8 +86,12 @@ export class JVMExceptionsAttribute extends JVMAttribute {
 }
 
 export class JVMInnerClassesAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'number_of_classes', SIZE_SHORT ],
@@ -98,8 +108,12 @@ export class JVMInnerClassesAttribute extends JVMAttribute {
 }
 
 export class JVMEnclosingMethodAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'class_index', SIZE_SHORT ],
@@ -109,15 +123,23 @@ export class JVMEnclosingMethodAttribute extends JVMAttribute {
 }
 
 export class JVMSyntheticAttribute extends JVMAttribute {
-  decode(attr) {
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
     // TODO: assert attribute_length === 0
     return {};
   }
 }
 
 export class JVMSignatureAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'signature_index', SIZE_SHORT ]
@@ -126,8 +148,12 @@ export class JVMSignatureAttribute extends JVMAttribute {
 }
 
 export class JVMSourceFileAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'sourcefile_index', SIZE_SHORT ]
@@ -136,8 +162,12 @@ export class JVMSourceFileAttribute extends JVMAttribute {
 }
 
 export class JVMLineNumberTableAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'debug_extension', attr.attribute_length ]
@@ -146,8 +176,12 @@ export class JVMLineNumberTableAttribute extends JVMAttribute {
 }
 
 export class JVMSourceDebugExtensionAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'line_number_table_length', SIZE_SHORT ],
@@ -162,8 +196,12 @@ export class JVMSourceDebugExtensionAttribute extends JVMAttribute {
 }
 
 export class JVMLocalVariableTableAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'local_variable_table_length', SIZE_SHORT ],
@@ -181,8 +219,12 @@ export class JVMLocalVariableTableAttribute extends JVMAttribute {
 }
 
 export class JVMLocalVariableTypeTableAttribute extends JVMAttribute {
-  decode(attr) {
-    let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
+    let buff = new NiceBuffer(this.attrInfo);
 
     return buff.readStruct([
       [ 'local_variable_type_table_length', SIZE_SHORT ],
@@ -200,188 +242,102 @@ export class JVMLocalVariableTypeTableAttribute extends JVMAttribute {
 }
 
 export class JVMDeprecatedAttribute extends JVMAttribute {
-  decode(attr) {
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
+
+  decode() {
     // TODO: assert attribute_length === 0
     return {};
   }
 }
 
 export class JVMRuntimeVisibleAnnotationsAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
 
 export class JVMRuntimeInvisibleAnnotationsAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
 
 export class JVMRuntimeVisibleParameterAnnotationsAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
 
 export class JVMRuntimeInvisibleParameterAnnotationsAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
 
 export class JVMRuntimeVisibleTypeAnnotationsAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
 
 export class JVMRuntimeInvisibleTypeAnnotationsAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
 
 export class JVMAnnotationDefaultAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
 
 export class JVMBootstrapMethodsAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
 
 export class JVMMethodParametersAttribute extends JVMAttribute {
-  decode(attr) {
-    // let buff = new NiceBuffer(new Buffer(attr.info));
+  constructor(attrInfo) {
+    super(attrInfo);
+  }
 
-    // return buff.readStruct([
-    //   [ 'num_annotations', SIZE_SHORT ],
-    //   [ '@annotations|num_annotations', {
-    //     struct: [
-    //       [ 'type_index', SIZE_SHORT ],
-    //       [ 'num_element_value_pairs', SIZE_SHORT ],
-    //       [ 'name_index', SIZE_SHORT ],
-    //       [ 'signature_index', SIZE_SHORT ],
-    //       [ 'index', SIZE_SHORT ],
-    //     ]
-    //   }]
-    // ]);
+  decode() {
     throw Errors.NotImplementedError;
   }
 }
