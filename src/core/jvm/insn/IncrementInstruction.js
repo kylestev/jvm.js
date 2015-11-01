@@ -13,6 +13,6 @@ export default class IncrementInstruction extends ImmediateByteInstruction {
   }
 
   read(buffer) {
-    this.increment = (wide ? buffer.short() : buffer.byte());
+    this.increment = (this.wide ? buffer.short() : buffer.byte());
   }
 }

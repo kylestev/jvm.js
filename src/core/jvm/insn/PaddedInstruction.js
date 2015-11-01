@@ -17,7 +17,7 @@ export default class PaddedInstruction extends AbstractInstruction {
 
   read(buffer) {
     super.read(buffer);
-    let bytesToRead = paddingBytes(buffer.pos);
+    let bytesToRead = this.paddingBytes(buffer.pos);
     for (let i = 0; i < bytesToRead; i++) {
       buffer.byte();
     }

@@ -15,6 +15,6 @@ export default class ImmediateByteInstruction extends AbstractInstruction {
   read(buffer) {
     console.log('IMMEDIATE_BYTE_INSTRUCTION');
     super.read(buffer);
-    this.val = (wide ? buffer.short() : buffer.byte());
+    this.val = (this.wide ? buffer.short() : buffer.byte());
   }
 }

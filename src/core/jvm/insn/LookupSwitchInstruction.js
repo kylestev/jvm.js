@@ -15,7 +15,7 @@ export default class LookupSwitchInstruction extends PaddedInstruction {
 
   read(buffer) {
     super.read(buffer);
-    while (offsetPairs.length > 0) {
+    while (this.offsetPairs.length > 0) {
         offsetPairs.pop();
     }
     this.defaultOffset = buffer.int();

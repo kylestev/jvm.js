@@ -263,18 +263,17 @@ export function getInstructionMatch(opcode) {
 
 export function createInstruction(idx, opcode, wide) {
   let match = getInstructionMatch(opcode);
+  if (match === null) {
+    return new AbstractInstruction(idx, opcode);
+  }
   let instance = null;
-  if (match !== null) {
-    if (match.subject_to_wide) {
-      instance = new match.type(idx, opcode, wide);
-    } else {
-      instance = new match.type(idx, opcode);
-    }
-    if (match.wrap && match.wrap !== null) {
-      instance = new match.wrap(instance);
-    }
+  if (match.subject_to_wide) {
+    instance = new match.type(idx, opcode, wide);
   } else {
-    instance = new AbstractInstruction(idx, opcode);
+    instance = new match.type(idx, opcode);
+  }
+  if (match.wrap && match.wrap !== null) {
+    instance = new match.wrap(instance);
   }
   return instance;
 }
