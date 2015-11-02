@@ -1,14 +1,11 @@
-const promisify = require('promisify-node');
-const fs = promisify('fs');
-const Jar = require('./Jar');
 const _ = require('../util/lodash');
+
 import { ClassInfo } from './jvm/ClassInfo';
 import { FieldInfo } from './jvm/FieldInfo';
 import { MethodInfo } from './jvm/MethodInfo';
 import { AttributeInfo } from './jvm/AttributeInfo';
+import { ClassCollection } from './ClassCollection';
 import { ClassFileParser } from './parsers/ClassFileParser';
-import { ACC_ABSTRACT, ACC_SYNTHETIC } from './jvm/AccessFlags';
-import { injectInstructions } from './parsers/BytecodeInstructions';
 
 function constantPoolLookup(pool, poolIdx) {
   return _.get(pool, [poolIdx - 1, 'info', 'bytes']);
@@ -46,11 +43,7 @@ function replaceConstantPoolStringLookups(memberInfo, pool) {
   return memberInfo;
 }
 
-export default class ClassLoader {
-  constructor() {
-    this._classes = new Map();
-  }
-
+class ClassLoader {
   loadClass(name, buff) {
     return new Promise((resolve, reject) => {
       try {
@@ -98,30 +91,22 @@ export default class ClassLoader {
   }
 
   loadClasses(archive) {
+    let classes = new Map();
     return Promise.all(
       _.map(_.toMap(archive.classBuffers), (buffer, name) => {
         return this.loadClass(name, buffer)
           .then((cls) => {
-            this._classes.set(name, cls);
+            classes.set(name, cls);
             return cls;
           });
       })
-    );
-  }
-
-  get classes() {
-    return this._classes;
-  }
-
-  [Symbol.iterator]() {
-    return this.classes.entries();
-  }
-
-  getClass(clazz) {
-    return this._classes.get(clazz);
-  }
-
-  loadJar(file) {
-    return (new Jar(file)).unpack();
+    )
+    .then(() => {
+      return ClassCollection.of(classes);
+    });
   }
 }
+
+export default {
+  ClassLoader
+};
