@@ -15,4 +15,9 @@ export default class InvokeDynamicInstruction extends ImmediateShortInstruction 
     // next two bytes are always zero and thus discarded.
     buffer.short();
   }
+
+  write(buffer) {
+    super.write(buffer);
+    buffer.writeShort(0);
+  }
 }

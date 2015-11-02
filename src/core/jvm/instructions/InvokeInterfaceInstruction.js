@@ -17,4 +17,10 @@ export default class InvokeInterfaceInstruction extends ImmediateShortInstructio
     // the next byte is always zero and thus discarded.
     buffer.byte();
   }
+
+  write(buffer) {
+    super.write(buffer);
+    buffer.writeByte(this.count);
+    buffer.writeByte(0);
+  }
 }

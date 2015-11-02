@@ -14,4 +14,8 @@ export default class ConstantInstruction extends AbstractInstruction {
   read(buffer) {
     this.instruction.read(buffer);
   }
+
+  write(buffer) {
+    this.instruction.write(buffer);
+  }
 }

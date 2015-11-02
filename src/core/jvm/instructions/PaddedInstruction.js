@@ -22,4 +22,12 @@ export default class PaddedInstruction extends AbstractInstruction {
       buffer.byte();
     }
   }
+
+  write(buffer) {
+    super.write(buffer);
+    let bytesToWrite = this.paddingBytes(buffer.pos);
+    for (let i = 0; i < bytesToWrite; i++) {
+      buffer.writeByte(0);
+    }
+  }
 }

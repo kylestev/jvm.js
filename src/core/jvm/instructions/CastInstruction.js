@@ -14,4 +14,8 @@ export default class CastInstruction extends AbstractInstruction {
   read(buffer) {
     this.instruction.read(buffer);
   }
+
+  write(buffer) {
+    this.instruction.write(buffer);
+  }
 }
