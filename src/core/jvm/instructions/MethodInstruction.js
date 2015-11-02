@@ -1,6 +1,6 @@
 const ImmediateShortInstruction = require('./ImmediateShortInstruction');
 
-export default class BranchInstruction extends ImmediateShortInstruction {
+export default class MethodInstruction extends ImmediateShortInstruction {
 
   constructor(idx, opcode) {
     super(idx, opcode);

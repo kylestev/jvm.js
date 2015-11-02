@@ -24,6 +24,6 @@ export default class AbstractInstruction {
   }
 
   write(buffer) {
-    
+    buffer.writeByte(this.opcode);
   }
 }

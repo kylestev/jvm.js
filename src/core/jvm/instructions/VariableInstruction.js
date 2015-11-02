@@ -18,6 +18,10 @@ export default class VariableInstruction extends AbstractInstruction {
     this.instruction.read(buffer);
   }
 
+  write(buffer) {
+    this.instruction.write(buffer);
+  }
+
   get var() {
     if (this.instruction.constructor.name === 'ImmediateByteInstruction') {
       return this.instruction.val;

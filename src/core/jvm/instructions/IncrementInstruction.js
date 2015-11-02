@@ -15,4 +15,13 @@ export default class IncrementInstruction extends ImmediateByteInstruction {
   read(buffer) {
     this.increment = (this.wide ? buffer.short() : buffer.byte());
   }
+
+  write(buffer) {
+    super.write(buffer);
+    if (this.wide) {
+      buffer.writeShort(this.increment);
+    } else {
+      buffer.writeByte(this.increment);
+    }
+  }
 }

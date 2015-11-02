@@ -14,4 +14,9 @@ export default class MultianewarrayInstruction extends ImmediateShortInstruction
   read(buffer) {
     this.dimensions = buffer.byte();
   }
+
+  write(buffer) {
+    super.write(buffer);
+    buffer.writeByte(this.dimensions);
+  }
 }

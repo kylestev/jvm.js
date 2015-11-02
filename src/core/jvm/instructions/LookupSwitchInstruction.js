@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 const PaddedInstruction = require('./PaddedInstruction');
 const OffsetPair = require('../OffsetPair')
 
@@ -25,5 +27,16 @@ export default class LookupSwitchInstruction extends PaddedInstruction {
         let offset = buffer.int();
         this.offsetPairs.push(new OffsetPair(match, offset));
     }
+  }
+
+  write(buffer) {
+    super.write(buffer);
+    buffer.writeInt(this.defaultOffset);
+    let pairCount = this.offsetPairs.length;
+    buffer.writeInt(pairCount);
+    _.each(this.offsetPairs, offsetPair => {
+      buffer.writeInt(offsetPair.match);
+      buffer.writeInt(offsetPair.offset);
+    });
   }
 }

@@ -16,4 +16,13 @@ export default class ImmediateByteInstruction extends AbstractInstruction {
     super.read(buffer);
     this.val = (this.wide ? buffer.short() : buffer.byte());
   }
+
+  write(buffer) {
+    super.write(buffer);
+    if (this.wide) {
+      buffer.writeShort(this.val);
+    } else {
+      buffer.writeByte(this.val);
+    }
+  }
 }

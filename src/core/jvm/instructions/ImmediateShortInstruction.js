@@ -15,4 +15,9 @@ export default class ImmediateShortInstruction extends AbstractInstruction {
     super.read(buffer);
     this.val = buffer.short();
   }
+
+  write(buffer) {
+    super.write(buffer);
+    buffer.writeShort(this.val);
+  }
 }
