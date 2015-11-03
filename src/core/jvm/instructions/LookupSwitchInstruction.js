@@ -39,4 +39,12 @@ export default class LookupSwitchInstruction extends PaddedInstruction {
       buffer.writeInt(offsetPair.offset);
     });
   }
+
+  toObject() {
+    return super.toObject({
+      offset_pairs: this.offsetPairs,
+      default_offset: this.defaultOffset,
+      size: this.size
+    });
+  }
 }

@@ -20,4 +20,10 @@ export default class InvokeDynamicInstruction extends ImmediateShortInstruction 
     super.write(buffer);
     buffer.writeShort(0);
   }
+
+  toObject() {
+    return super.toObject({
+      size: this.size
+    });
+  }
 }

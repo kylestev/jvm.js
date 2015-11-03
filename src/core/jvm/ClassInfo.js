@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { MemberInfo } from './MemberInfo';
 
 class ClassInfo extends MemberInfo {
@@ -49,6 +50,25 @@ class ClassInfo extends MemberInfo {
 
   get superName() {
     return this._superName;
+  }
+
+  toJson() {
+    return JSON.stringify(this.toObject(), null, 2);
+  }
+
+  toObject() {
+    let obj = super.toObject();
+    let props = {
+      superName: this.superName,
+      major: this.major,
+      minor: this.minor,
+      interfaces: this.interfaces,
+      pool: this._pool.toObject(),
+      fields: _.map(this.fields, (field) => field.toObject()),
+      methods: _.map(this.methods, (method) => method.toObject()),
+    };
+
+    return _.merge(obj, props);
   }
 }
 

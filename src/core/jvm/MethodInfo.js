@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { ACC_SYNTHETIC, ACC_ABSTRACT } from './AccessFlags';
 import { MemberInfo } from './MemberInfo';
 
@@ -25,6 +26,13 @@ class MethodInfo extends MemberInfo {
       return code.decoded;
     }
     return [];
+  }
+
+  toObject() {
+    return _.merge(super.toObject(), {
+      desc: this.desc,
+      instructions: _.map(this.instructions, (insn) => insn.toObject())
+    });
   }
 }
 

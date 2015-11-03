@@ -39,4 +39,14 @@ export default class TableSwitchInstruction extends PaddedInstruction {
       buffer.writeInt(jumpOffset);
     });
   }
+
+  toObject() {
+    return super.toObject({
+      default_offset: this.defaultOffset,
+      low_byte: this.lowByte,
+      high_byte: this.highByte,
+      jump_offsets: this.jumpOffsets,
+      size: this.size
+    });
+  }
 }

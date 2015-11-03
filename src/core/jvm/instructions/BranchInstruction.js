@@ -19,4 +19,10 @@ export default class BranchInstruction extends AbstractBranchInstruction {
     super.write(buffer);
     buffer.writeShort(super.branchOffset);
   }
+
+  toObject() {
+    return super.toObject({
+      size: this.size
+    });
+  }
 }

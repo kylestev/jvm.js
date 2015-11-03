@@ -48,6 +48,13 @@ class AttributeInfo {
   get rawData() {
     return this._data;
   }
+
+  toObject() {
+    return {
+      name: this.name,
+      length: this._attr.attribute_length
+    };
+  }
 }
 
 export default {

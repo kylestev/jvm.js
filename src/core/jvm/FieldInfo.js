@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { MemberInfo } from './MemberInfo';
 
 class FieldInfo extends MemberInfo {
@@ -8,6 +9,12 @@ class FieldInfo extends MemberInfo {
 
   get desc() {
     return this._descriptor;
+  }
+
+  toObject() {
+    return _.merge(super.toObject(), {
+      desc: this.desc
+    });
   }
 }
 

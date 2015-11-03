@@ -10,4 +10,11 @@ export default class AbstractBranchInstruction extends AbstractInstruction {
   get totalOffset() {
     return this.idx + this.branchOffset;
   }
+
+  toObject() {
+    return super.toObject({
+      branch_offset: this.branchOffset,
+      total_offset: this.totalOffset
+    });
+  }
 }

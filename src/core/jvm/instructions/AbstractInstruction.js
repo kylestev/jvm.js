@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { OPCODE_TO_NAME } from './Opcodes';
 
 export default class AbstractInstruction {
@@ -25,5 +26,17 @@ export default class AbstractInstruction {
 
   write(buffer) {
     buffer.writeByte(this.opcode);
+  }
+
+  toObject(props = {}) {
+    let defaults = {
+      idx: this.idx,
+      opcode: this.opcode,
+      offset: this.offset,
+      opname: this.opname,
+      size: this.size
+    };
+
+    return _.merge(defaults, props);
   }
 }
