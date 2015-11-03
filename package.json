@@ -1,8 +1,10 @@
 {
-  "name": "jsbc",
-  "version": "0.0.1",
+  "name": "jvm",
+  "version": "0.0.3",
   "scripts": {
+    "compile": "babel -d lib/ src/",
     "lint": "eslint src",
+    "prepublish": "npm run compile",
     "test": "./node_modules/.bin/eslint src"
   },
   "dependencies": {

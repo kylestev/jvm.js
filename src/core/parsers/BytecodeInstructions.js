@@ -4,15 +4,10 @@ import { JVMCodeAttribute } from '../jvm/Attributes';
 import { InstructionFactory, NAME_TO_OPCODE } from '../jvm/instructions';
 
 function extractCodeFromMethod(method) {
-  let code = _.find(method.attribute_info, { attribute_name: 'Code' });
-  let attr = new JVMCodeAttribute(code);
+  let code = method.findAttributeByName('Code');
+  let attr = new JVMCodeAttribute(code.raw);
 
   return attr.decode().code;
-}
-
-export function injectInstructions(method) {
-  method.instructions = parseInstructions(method);
-  return method;
 }
 
 export function parseInstructions(method) {

@@ -1,17 +1,23 @@
-const core = require('./core');
+import { Jar } from './core/Jar';
 
 let start = process.hrtime();
 
-core.createLoader()
-  .then((loader) => {
-    return loader.loadJar(process.argv[2])
-      .then((archive) => archive.unpack())
-      .then((archive) => loader.loadClasses(archive))
-      .then(() => {
-        let [elapsedSeconds, elapsedNanos] = process.hrtime(start);
-        let elapsed = (elapsedSeconds + (elapsedNanos / 1000000000));
-        console.log('parsed after', elapsed, 'seconds');
-      })
-      .catch(console.error.bind(console));
+Jar.unpack(process.argv[2])
+  .then((jar) => {
+    let [elapsedSeconds, elapsedNanos] = process.hrtime(start);
+    let elapsed = (elapsedSeconds + (elapsedNanos / 1000000000));
+    console.log('parsed jar contents after', elapsed, 'seconds');
+
+    for (let [name, cls] of jar) {
+      if (cls.name === 'client') {
+        console.log('found client class!');
+        console.log(JSON.stringify({
+          name: cls.name,
+          superName: cls.superName,
+          methodCount: cls.methods.length,
+          fieldCount: cls.fields.length
+        }, null, 2));
+      }
+    }
   })
   .catch(console.error.bind(console));
