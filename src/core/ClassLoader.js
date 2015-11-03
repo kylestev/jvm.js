@@ -58,7 +58,7 @@ class ClassLoader {
         });
 
         let pool = cls.constant_pool;
-        let version = { major: cls.major_version, minor: minor_version };
+        let version = { major: cls.major_version, minor: cls.minor_version };
         let className = constantPoolLookup(pool, pool[cls.this_class - 1].info.name_index);
         let superName = constantPoolLookup(pool, pool[cls.super_class - 1].info.name_index);
         let classInfo = new ClassInfo(cls.access_flags, version, className, superName, pool);
