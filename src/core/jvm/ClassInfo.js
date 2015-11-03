@@ -1,8 +1,9 @@
 import { MemberInfo } from './MemberInfo';
 
 class ClassInfo extends MemberInfo {
-  constructor(flags, name, superName, pool) {
+  constructor(flags, version, name, superName, pool) {
     super(flags, name);
+    this._version = version;
     this._fields = [];
     this._interfaces = [];
     this._methods = [];
@@ -30,8 +31,16 @@ class ClassInfo extends MemberInfo {
     return this._interfaces;
   }
 
+  get major() {
+    return this._version.major;
+  }
+
   get methods() {
     return this._methods;
+  }
+
+  get minor() {
+    return this._version.minor;
   }
 
   get pool() {
