@@ -1,14 +1,16 @@
+import { InstructionMajorVersionVerifier } from '../../jvm/verify/InstructionMajorVersionVerifier';
 const JVM_CLASS_FILE_MAGIC_NUMBER = 0xcafebabe;
 
 class ClassWriter {
   constructor(cls, buffer) {
     this.cls = cls;
     this.buffer = buffer;
+    this.majorVerifier = new InstructionMajorVersionVerifier(cls);
   }
 
   verify() {
     // will need to change to ensure all verifiers pass before returning once they are added
-    return true;
+    return this.majorVerifier.verify();
   }
 
   write() {
