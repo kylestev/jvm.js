@@ -1,25 +1,12 @@
 import * as _ from 'lodash';
 
-const AbstractInstruction = require('./AbstractInstruction');
+const InstructionWrapper = require('./InstructionWrapper');
 const ImmediateByteInstruction = require('./ImmediateByteInstruction');
 
-export default class VariableInstruction extends AbstractInstruction {
+export default class VariableInstruction extends InstructionWrapper {
 
   constructor(instruction) {
-    super(instruction.idx, instruction.opcode);
-    this.instruction = instruction;
-  }
-
-  get size() {
-    return this.instruction.size;
-  }
-
-  read(buffer) {
-    this.instruction.read(buffer);
-  }
-
-  write(buffer) {
-    this.instruction.write(buffer);
+    super(instruction);
   }
 
   get val() {

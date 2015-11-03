@@ -1,21 +1,8 @@
-const AbstractInstruction = require('./AbstractInstruction');
+const InstructionWrapper = require('./InstructionWrapper');
 
-export default class ArithmeticInstruction extends AbstractInstruction {
+export default class ArithmeticInstruction extends InstructionWrapper {
 
   constructor(instruction) {
-    super(instruction.idx, instruction.opcode);
-    this.instruction = instruction;
-  }
-
-  get size() {
-    return this.instruction.size;
-  }
-
-  read(buffer) {
-    this.instruction.read(buffer);
-  }
-
-  write(buffer) {
-    this.instruction.write(buffer);
+    super(instruction);
   }
 }
