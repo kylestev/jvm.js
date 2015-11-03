@@ -74,6 +74,11 @@ export const NAME_TO_OPCODE = _.object(_.map(_.invert(OPCODE_TO_NAME), (opcode, 
   return [name, +opcode];
 }));
 
+export const OPCODE_VERSIONS = {
+  // JDK 7
+  51: [NAME_TO_OPCODE.INVOKEDYNAMIC]
+};
+
 export const INSTRUCTION_INDICES = [
   { // ICONST_M1 - DCONST_1
     low_opcode_index: 0x02,
