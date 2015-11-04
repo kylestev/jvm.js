@@ -3,7 +3,8 @@ import { ACC_ABSTRACT, ACC_SYNTHETIC } from './AccessFlags';
 import { parseInstructions } from '../parsers/BytecodeInstructions';
 
 const AttributeDecoderLookup = {
-  Code: function (method) {
+  Code: function (pool, attr) {
+    let method = attr._owner;
     if (method.hasNoMethodBody) {
       throw new Error('This method has no method body.');
     }
@@ -13,12 +14,13 @@ const AttributeDecoderLookup = {
 };
 
 class AttributeInfo {
-  constructor(attr, owner) {
+  constructor(attr, owner, pool) {
     this._attr = attr;
     this._data = attr.info;
     this._decoded = false;
     this._name = attr.attribute_name;
     this._owner = owner;
+    this._pool = pool;
   }
 
   get decoded() {
@@ -27,7 +29,7 @@ class AttributeInfo {
         throw new Error('Attribute could not be decoded as it has no known decoder.');
       }
 
-      this._decoded = AttributeDecoderLookup[this._name](this._owner);
+      this._decoded = AttributeDecoderLookup[this._name](this._pool, this);
     }
 
     return this._decoded;
