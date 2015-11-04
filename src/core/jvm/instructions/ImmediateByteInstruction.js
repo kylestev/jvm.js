@@ -25,4 +25,11 @@ export default class ImmediateByteInstruction extends AbstractInstruction {
       buffer.writeByte(this.val);
     }
   }
+
+  toObject() {
+    return super.toObject({
+      val: this.val,
+      size: this.size
+    });
+  }
 }

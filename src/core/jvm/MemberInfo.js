@@ -34,6 +34,14 @@ class MemberInfo {
   get name() {
     return this._name;
   }
+
+  toObject() {
+    return {
+      name: this.name,
+      flags: this.flags,
+      attributes: _.map(this.attributes, (attribute) => attribute.toObject())
+    };
+  }
 }
 
 export default {

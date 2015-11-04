@@ -20,4 +20,11 @@ export default class ImmediateShortInstruction extends AbstractInstruction {
     super.write(buffer);
     buffer.writeShort(this.val);
   }
+
+  toObject() {
+    return super.toObject({
+      val: this.val,
+      size: this.size
+    });
+  }
 }

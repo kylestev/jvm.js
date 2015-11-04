@@ -19,4 +19,10 @@ export default class MultianewarrayInstruction extends ImmediateShortInstruction
     super.write(buffer);
     buffer.writeByte(this.dimensions);
   }
+
+  toObject() {
+    return super.toObject({
+      size: this.size
+    });
+  }
 }

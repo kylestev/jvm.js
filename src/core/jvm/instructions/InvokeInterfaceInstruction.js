@@ -23,4 +23,11 @@ export default class InvokeInterfaceInstruction extends ImmediateShortInstructio
     buffer.writeByte(this.count);
     buffer.writeByte(0);
   }
+
+  toObject() {
+    return super.toObject({
+      count: this.count,
+      size: this.size
+    });
+  }
 }

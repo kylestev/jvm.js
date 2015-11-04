@@ -19,4 +19,10 @@ export default class VariableInstruction extends InstructionWrapper {
     }
     return 0;
   }
+
+  toObject() {
+    return super.toObject({
+      val: this.var
+    });
+  }
 }

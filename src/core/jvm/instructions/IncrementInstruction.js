@@ -24,4 +24,10 @@ export default class IncrementInstruction extends ImmediateByteInstruction {
       buffer.writeByte(this.increment);
     }
   }
+
+  toObject() {
+    return super.toObject({
+      increment: this.increment
+    });
+  }
 }
