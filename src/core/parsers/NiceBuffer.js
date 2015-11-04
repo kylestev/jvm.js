@@ -78,7 +78,7 @@ export class NiceBuffer {
   }
 
   writeByte(val) {
-    this.buffer.writeUInt8LE(val, this.move(SIZE_BYTE));
+    this.buffer.writeUInt8(val, this.move(SIZE_BYTE));
   }
 
   writeShort(val) {
