@@ -38,7 +38,6 @@ export const ClassFileParser =
           //
           // More details here: https://github.com/keichi/binary-parser/issues/20
           if (lastEntry && (lastEntry.tag === 6 || lastEntry.tag === 5)) {
-            this.constant_pool[lastIdx - 1] = this.constant_pool[lastIdx];
             this.constant_pool_count -= 1;
             this.constant_pool.push(false);
           }
