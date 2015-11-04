@@ -22,7 +22,7 @@ export default class VariableInstruction extends AbstractInstruction {
     this.instruction.write(buffer);
   }
 
-  get var() {
+  get val() {
     if (this.instruction.constructor.name === 'ImmediateByteInstruction') {
       return this.instruction.val;
     } else if (this.instruction.opname.includes('M1')) {
