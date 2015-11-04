@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { ACC_ABSTRACT, ACC_SYNTHETIC } from './AccessFlags';
 import { parseInstructions } from '../parsers/BytecodeInstructions';
+let Exceptions = require('../parsers/attributes/Exceptions');
 
 const AttributeDecoderLookup = {
   Code: function (pool, attr) {
@@ -10,6 +11,10 @@ const AttributeDecoderLookup = {
     }
 
     return parseInstructions(method);
+  },
+
+  Exceptions: function (pool, attr) {
+    return Exceptions.parse(pool, attr).exceptions;
   }
 };
 
