@@ -8,7 +8,7 @@ export class NiceBuffer {
   constructor(buffer) {
     this.pos = 0;
     this.buffer = buffer;
-    this.lengthMap = [];
+    this.lengthMap = {};
     this.lengthMap[SIZE_INT] = 'int';
     this.lengthMap[SIZE_SHORT] = 'short';
     this.lengthMap[SIZE_BYTE] = 'byte';
