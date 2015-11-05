@@ -109,6 +109,6 @@ class ClassLoader {
   }
 }
 
-export default {
+export {
   ClassLoader
 };

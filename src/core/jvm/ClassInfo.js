@@ -72,6 +72,6 @@ class ClassInfo extends MemberInfo {
   }
 }
 
-export default {
+export {
   ClassInfo
 };

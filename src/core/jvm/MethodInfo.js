@@ -36,6 +36,6 @@ class MethodInfo extends MemberInfo {
   }
 }
 
-export default {
+export {
   MethodInfo
 };

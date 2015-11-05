@@ -32,7 +32,7 @@ class InstructionMajorVersionVerifier {
   }
 }
 
-export default {
+export {
   InstructionMajorVersionVerifier
 };
 

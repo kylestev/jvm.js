@@ -1,5 +1,5 @@
 import { Jar } from './core/Jar';
 
-export default {
+export {
   Jar
 };

@@ -33,6 +33,6 @@ class ClassWriter {
   }
 }
 
-export default {
+export {
   ClassWriter
 };
