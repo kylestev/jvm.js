@@ -62,6 +62,6 @@ class Jar {
   }
 }
 
-export default {
+export {
   Jar
 };

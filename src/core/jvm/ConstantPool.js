@@ -25,6 +25,6 @@ class ConstantPool {
   }
 }
 
-export default {
+export {
   ConstantPool
 };

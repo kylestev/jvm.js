@@ -44,6 +44,6 @@ class MemberInfo {
   }
 }
 
-export default {
+export {
   MemberInfo
 };

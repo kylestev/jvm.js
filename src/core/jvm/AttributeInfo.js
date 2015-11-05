@@ -57,6 +57,6 @@ class AttributeInfo {
   }
 }
 
-export default {
+export {
   AttributeInfo
 };

@@ -18,6 +18,6 @@ class FieldInfo extends MemberInfo {
   }
 }
 
-export default {
+export {
   FieldInfo
 };

@@ -43,6 +43,6 @@ class ClassCollection {
   }
 }
 
-export default {
+export {
   ClassCollection
 };

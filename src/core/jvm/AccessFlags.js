@@ -52,8 +52,10 @@ function AccessFlags() {
 
 const ACCESS_FLAGS = new AccessFlags();
 
-export default {
-  AccessFlags: ACCESS_FLAGS,
+let Flags = ACCESS_FLAGS;
+
+export {
+  Flags,
   ACC_PUBLIC,
   ACC_FINAL,
   ACC_SUPER,
