@@ -45,7 +45,7 @@ class ClassInfo extends MemberInfo {
   }
 
   get pool() {
-    this._pool;
+    return this._pool;
   }
 
   get superName() {
