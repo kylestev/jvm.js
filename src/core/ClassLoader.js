@@ -44,7 +44,16 @@ function replaceConstantPoolStringLookups(memberInfo, pool) {
   return memberInfo;
 }
 
+/**
+ * Utility class for loading JVM Class Files into {@link ClassInfo} objects.
+ */
 class ClassLoader {
+  /**
+   * Parses the class from the {@link Buffer} object.
+   * @param  {string} name - the name of the Class File
+   * @param  {Buffer} buff - the byte Buffer object
+   * @return {Promise<ClassInfo>}
+   */
   loadClass(name, buff) {
     return new Promise((resolve, reject) => {
       try {
@@ -92,6 +101,11 @@ class ClassLoader {
     });
   }
 
+  /**
+   * Loads all classes from a {@link Jar}.
+   * @param  {Jar} archive
+   * @return {Promise<ClassCollection>}
+   */
   loadClasses(archive) {
     let classes = new Map();
     return Promise.all(

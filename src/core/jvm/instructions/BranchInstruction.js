@@ -1,3 +1,4 @@
+/** @ignore */
 const AbstractBranchInstruction = require('./AbstractBranchInstruction');
 
 export default class BranchInstruction extends AbstractBranchInstruction {

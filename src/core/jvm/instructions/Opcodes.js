@@ -1,5 +1,8 @@
 import * as _ from 'lodash';
 
+/**
+ * @type {Object<string, AbstractInstruction>}
+ */
 export const InstructionTypes = {
   AbstractInstruction: require('./AbstractInstruction'),
   ArithmeticInstruction: require('./ArithmeticInstruction'),

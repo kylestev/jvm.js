@@ -9,3 +9,5 @@ logs
 *.log
 npm-debug.log*
 
+# generated docs
+docs
