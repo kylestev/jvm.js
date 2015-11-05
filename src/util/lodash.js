@@ -7,8 +7,7 @@ _.mixin({
 
   toMap: function (map) {
     let m = {};
-    for (var k of map) {
-      let [key, value] = k;
+    for (let [key, value] of map) {
       m[key] = value;
     }
     return m;
