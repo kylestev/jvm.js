@@ -1,5 +1,9 @@
 import { Parser } from 'binary-parser';
 
+/**
+ * @see https://github.com/keichi/binary-parser#api
+ * @type {Object}
+ */
 export const AttributeInfo =
   Parser.start()
     .endianess('big')
@@ -9,6 +13,10 @@ export const AttributeInfo =
       length: 'attribute_length'
     });
 
+/**
+ * @see https://github.com/keichi/binary-parser#api
+ * @type {Object}
+ */
 export const ClassMemberInfo =
   Parser.start()
     .endianess('big')
@@ -23,6 +31,10 @@ export const ClassMemberInfo =
       }
     });
 
+/**
+ * @see https://github.com/keichi/binary-parser#api
+ * @type {Object}
+ */
 export const InterfaceInfo =
   Parser.start()
     .endianess('big')

@@ -1,3 +1,4 @@
+/** @ignore */
 const InstructionWrapper = require('./InstructionWrapper');
 
 export default class CastInstruction extends InstructionWrapper {

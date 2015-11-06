@@ -1,0 +1,13 @@
+{
+  "source": "./src",
+  "destination": "./docs",
+  "onlyExported": true,
+  "coverage": true,
+  "package": "./package.json",
+  "readme": "./README.md",
+  "title": "jvm.js",
+  "excludes": ["instructions/.+Instruction\\.js"],
+  "manual": {
+    "overview": ["./README.md"]
+  }
+}

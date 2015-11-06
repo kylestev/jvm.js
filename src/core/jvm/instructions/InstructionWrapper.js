@@ -1,3 +1,4 @@
+/** @ignore */
 const AbstractInstruction = require('./AbstractInstruction');
 
 export default class InstructionWrapper extends AbstractInstruction {
