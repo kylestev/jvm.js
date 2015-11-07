@@ -7,14 +7,26 @@ import { MemberInfo } from './MemberInfo';
  */
 class MethodInfo extends MemberInfo {
   /**
+   * 
+   * @param  {ClassInfo} classInfo - The class the given method is in
    * @param  {Number} accessFlags - access flags bit string
    * @param  {string} name - name of this entry in the ClassFile
    * @param  {string} descriptor - type descriptor
    */
-  constructor(flags, name, descriptor) {
+  constructor(classInfo, flags, name, descriptor) {
     super(flags, name);
+    /** @type {ClassInfo} class this method is within */
+    this._classInfo = classInfo;
     /** @type {string} type descriptor */
     this._descriptor = descriptor;
+  }
+
+  /**
+   * Access the class this member is within
+   * @return {ClassInfo}
+   */
+  get classInfo() {
+    return this._classInfo;
   }
 
   /**

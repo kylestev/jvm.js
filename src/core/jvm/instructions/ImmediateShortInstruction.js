@@ -3,8 +3,8 @@ const AbstractInstruction = require('./AbstractInstruction');
 
 export default class ImmediateShortInstruction extends AbstractInstruction {
 
-  constructor(idx, opcode) {
-    super(idx, opcode);
+  constructor(methodInfo, idx, opcode) {
+    super(methodInfo, idx, opcode);
     this.val = 0;
   }
 

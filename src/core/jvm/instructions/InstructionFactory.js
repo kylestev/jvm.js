@@ -8,11 +8,17 @@ import { getInstructionType } from './Opcodes';
 export class InstructionFactory {
   /**
    * @private
-   * @param  {Number} idx    instruction index
-   * @param  {Number} opcode opcode identifier
-   * @param  {Boolean} wide  wide instruction flag
+   * @param  {MethodInfo} methodInfo The method the given instruction is in
+   * @param  {Number} idx            instruction index
+   * @param  {Number} opcode         opcode identifier
+   * @param  {Boolean} wide          wide instruction flag
    */
-  constructor(idx, opcode, wide) {
+  constructor(methodInfo, idx, opcode, wide) {
+    /**
+     * @private
+     * @type {MethodInfo}
+     */
+    this.methodInfo = methodInfo;
     /**
      * @private
      * @type {Number}
@@ -87,8 +93,8 @@ export class InstructionFactory {
     let InsnType = this.instruction.type;
 
     return this.isWide
-      ? new InsnType(this.idx, this.opcode, this.wide)
-      : new InsnType(this.idx, this.opcode);
+      ? new InsnType(this.methodInfo, this.idx, this.opcode, this.wide)
+      : new InsnType(this.methodInfo, this.idx, this.opcode);
   }
 
   /**
@@ -96,12 +102,13 @@ export class InstructionFactory {
    * complex process of building instructions to be simplified into a 3
    * parameter method.
    * @public
-   * @param  {Number} idx    instruction index
-   * @param  {Number} opcode opcode identifier
-   * @param  {Boolean} wide  wide instruction flag
+   * @param  {MethodInfo} methodInfo The method the given instruction is in
+   * @param  {Number} idx            instruction index
+   * @param  {Number} opcode opcode  identifier
+   * @param  {Boolean} wide          wide instruction flag
    * @return {AbstractInstruction}
    */
-  static of(idx, opcode, wide) {
-    return (new InstructionFactory(idx, opcode, wide)).build();
+  static of(methodInfo, idx, opcode, wide) {
+    return (new InstructionFactory(methodInfo, idx, opcode, wide)).build();
   }
 }
