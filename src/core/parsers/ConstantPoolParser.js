@@ -25,11 +25,11 @@ const ConstantStringInfo =
 
 const ConstantIntegerInfo =
   Parser.start()
-    .uint32('bytes');
+    .int32('value');
 
 const ConstantFloatInfo =
   Parser.start()
-    .uint32('bytes');
+    .uint32('value');
 
 const ConstantLongInfo =
   Parser.start()
