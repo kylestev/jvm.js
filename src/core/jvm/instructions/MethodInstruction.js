@@ -1,7 +1,7 @@
 /** @ignore */
-const ImmediateShortInstruction = require('./ImmediateShortInstruction');
+const MemberInstruction = require('./MemberInstruction');
 
-export default class MethodInstruction extends ImmediateShortInstruction {
+export default class MethodInstruction extends MemberInstruction {
 
   constructor(methodInfo, idx, opcode) {
     super(methodInfo, idx, opcode);
