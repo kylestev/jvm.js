@@ -1,6 +1,7 @@
 {
   "name": "jvm",
-  "version": "0.0.5",
+  "version": "0.0.6",
+  "main": "./lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
     "docs": "./node_modules/.bin/esdoc -c esdoc.json",
