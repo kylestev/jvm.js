@@ -6,7 +6,7 @@
   "package": "./package.json",
   "readme": "./README.md",
   "title": "jvm.js",
-  "excludes": ["instructions/.+Instruction\\.js"],
+  "excludes": ["instructions/.+Instruction\\.js", "Attributes\\.js"],
   "manual": {
     "overview": ["./README.md"]
   }
