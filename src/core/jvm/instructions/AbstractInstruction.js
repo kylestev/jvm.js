@@ -21,6 +21,10 @@ export default class AbstractInstruction {
     return 1;
   }
 
+  get pool() {
+    return this.methodInfo._classInfo.pool;
+  }
+
   read(buffer) {
     this.offset = (buffer.pos - 1);
   }

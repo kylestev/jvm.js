@@ -20,10 +20,6 @@ export default class MemberInstruction extends ImmediateShortInstruction {
     return this.pool.at(this.pool.at(info.class_index).info.name_index).info.bytes;
   }
 
-  get pool() {
-    return this.methodInfo._classInfo.pool;
-  }
-
   get typeInfo() {
     return this.pool.at(this.valInfo.name_and_type_index).info;
   }
