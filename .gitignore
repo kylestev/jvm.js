@@ -1,3 +1,13 @@
 node_modules
 lib
 
+# OS X
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# generated docs
+docs

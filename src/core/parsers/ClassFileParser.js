@@ -4,7 +4,10 @@ import { AttributeInfo, ClassMemberInfo, InterfaceInfo } from './ClassMembers';
 
 const JVM_CLASS_FILE_MAGIC_NUMBER = 0xcafebabe;
 
-
+/**
+ * @see https://github.com/keichi/binary-parser#api
+ * @type {Object}
+ */
 export const ClassFileParser =
   Parser.start()
     // This is the default endian type for binary-parser but it's better to be safe than sorry.
@@ -38,7 +41,6 @@ export const ClassFileParser =
           //
           // More details here: https://github.com/keichi/binary-parser/issues/20
           if (lastEntry && (lastEntry.tag === 6 || lastEntry.tag === 5)) {
-            this.constant_pool[lastIdx - 1] = this.constant_pool[lastIdx];
             this.constant_pool_count -= 1;
             this.constant_pool.push(false);
           }

@@ -1,3 +1,4 @@
+/** @ignore */
 const ImmediateShortInstruction = require('./ImmediateShortInstruction');
 
 export default class MethodInstruction extends ImmediateShortInstruction {

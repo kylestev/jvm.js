@@ -1,3 +1,4 @@
+/** @ignore */
 const AbstractInstruction = require('./AbstractInstruction');
 
 export default class ImmediateByteInstruction extends AbstractInstruction {
@@ -24,5 +25,12 @@ export default class ImmediateByteInstruction extends AbstractInstruction {
     } else {
       buffer.writeByte(this.val);
     }
+  }
+
+  toObject() {
+    return super.toObject({
+      val: this.val,
+      size: this.size
+    });
   }
 }

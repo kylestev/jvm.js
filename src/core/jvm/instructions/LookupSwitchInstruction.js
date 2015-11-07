@@ -1,6 +1,8 @@
 import * as _ from 'lodash';
 
+/** @ignore */
 const PaddedInstruction = require('./PaddedInstruction');
+/** @ignore */
 const OffsetPair = require('../OffsetPair')
 
 export default class LookupSwitchInstruction extends PaddedInstruction {
@@ -37,6 +39,14 @@ export default class LookupSwitchInstruction extends PaddedInstruction {
     _.each(this.offsetPairs, offsetPair => {
       buffer.writeInt(offsetPair.match);
       buffer.writeInt(offsetPair.offset);
+    });
+  }
+
+  toObject() {
+    return super.toObject({
+      offset_pairs: this.offsetPairs,
+      default_offset: this.defaultOffset,
+      size: this.size
     });
   }
 }

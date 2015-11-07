@@ -1,3 +1,4 @@
+/** @ignore */
 const ImmediateShortInstruction = require('./ImmediateShortInstruction');
 
 export default class InvokeDynamicInstruction extends ImmediateShortInstruction {
@@ -19,5 +20,11 @@ export default class InvokeDynamicInstruction extends ImmediateShortInstruction 
   write(buffer) {
     super.write(buffer);
     buffer.writeShort(0);
+  }
+
+  toObject() {
+    return super.toObject({
+      size: this.size
+    });
   }
 }

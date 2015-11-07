@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 
+/** @ignore */
 const PaddedInstruction = require('./PaddedInstruction');
 
 export default class TableSwitchInstruction extends PaddedInstruction {
@@ -37,6 +38,16 @@ export default class TableSwitchInstruction extends PaddedInstruction {
     buffer.writeInt(this.highByte);
     _.each(this.jumpOffsets, jumpOffset => {
       buffer.writeInt(jumpOffset);
+    });
+  }
+
+  toObject() {
+    return super.toObject({
+      default_offset: this.defaultOffset,
+      low_byte: this.lowByte,
+      high_byte: this.highByte,
+      jump_offsets: this.jumpOffsets,
+      size: this.size
     });
   }
 }

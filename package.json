@@ -1,8 +1,10 @@
 {
   "name": "jvm",
-  "version": "0.0.3",
+  "version": "0.0.6",
+  "main": "./lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
+    "docs": "./node_modules/.bin/esdoc -c esdoc.json",
     "lint": "eslint src",
     "prepublish": "npm run compile",
     "test": "./node_modules/.bin/eslint src"
@@ -17,6 +19,7 @@
   "devDependencies": {
     "babel": "^5.8.29",
     "babel-eslint": "^4.1.3",
+    "esdoc": "^0.4.3",
     "eslint": "^1.7.3"
   }
 }

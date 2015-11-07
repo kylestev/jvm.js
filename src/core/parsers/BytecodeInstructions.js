@@ -10,6 +10,12 @@ function extractCodeFromMethod(method) {
   return attr.decode().code;
 }
 
+/**
+ * Parses the instructions from a given {@link MethodInfo}'s
+ * {@link JVMCodeAttribute}.
+ * @param  {MethodInfo} method
+ * @return {Array<AbstractInstructions>}
+ */
 export function parseInstructions(method) {
   let code = extractCodeFromMethod(method);
   let buffer = new NiceBuffer(new Buffer(code));

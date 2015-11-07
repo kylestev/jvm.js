@@ -1,3 +1,4 @@
+/** @ignore */
 const ImmediateShortInstruction = require('./ImmediateShortInstruction');
 
 export default class MultianewarrayInstruction extends ImmediateShortInstruction {
@@ -18,5 +19,11 @@ export default class MultianewarrayInstruction extends ImmediateShortInstruction
   write(buffer) {
     super.write(buffer);
     buffer.writeByte(this.dimensions);
+  }
+
+  toObject() {
+    return super.toObject({
+      size: this.size
+    });
   }
 }

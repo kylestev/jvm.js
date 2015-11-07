@@ -1,5 +1,8 @@
 import * as _ from 'lodash';
 
+/**
+ * @type {Object<string, AbstractInstruction>}
+ */
 export const InstructionTypes = {
   AbstractInstruction: require('./AbstractInstruction'),
   ArithmeticInstruction: require('./ArithmeticInstruction'),
@@ -73,6 +76,11 @@ export const OPCODE_TO_NAME = [
 export const NAME_TO_OPCODE = _.object(_.map(_.invert(OPCODE_TO_NAME), (opcode, name) => {
   return [name, +opcode];
 }));
+
+export const OPCODE_VERSIONS = {
+  // JDK 7
+  51: [NAME_TO_OPCODE.INVOKEDYNAMIC]
+};
 
 export const INSTRUCTION_INDICES = [
   { // ICONST_M1 - DCONST_1

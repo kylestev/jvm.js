@@ -2,7 +2,7 @@ import {
   NiceBuffer,
   SIZE_INT,
   SIZE_SHORT,
-  SIZE_BYTE,
+  SIZE_BYTE
 } from '../parsers/NiceBuffer';
 
 const Errors = require('../../Errors');

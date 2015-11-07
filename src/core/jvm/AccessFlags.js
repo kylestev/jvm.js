@@ -20,6 +20,9 @@ const FLAGS = {
   ACC_ENUM
 };
 
+/**
+ * [AccessFlags description]
+ */
 function AccessFlags() {
   let funcs = {};
   
@@ -52,8 +55,11 @@ function AccessFlags() {
 
 const ACCESS_FLAGS = new AccessFlags();
 
-export default {
-  AccessFlags: ACCESS_FLAGS,
+/** @type {AccessFlags} */
+let Flags = ACCESS_FLAGS;
+
+export {
+  Flags,
   ACC_PUBLIC,
   ACC_FINAL,
   ACC_SUPER,

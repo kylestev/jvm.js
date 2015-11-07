@@ -1,3 +1,4 @@
+/** @ignore */
 const AbstractInstruction = require('./AbstractInstruction');
 
 export default class ImmediateShortInstruction extends AbstractInstruction {
@@ -19,5 +20,12 @@ export default class ImmediateShortInstruction extends AbstractInstruction {
   write(buffer) {
     super.write(buffer);
     buffer.writeShort(this.val);
+  }
+
+  toObject() {
+    return super.toObject({
+      val: this.val,
+      size: this.size
+    });
   }
 }

@@ -1,3 +1,4 @@
+/** @ignore */
 const ImmediateByteInstruction = require('./ImmediateByteInstruction');
 
 export default class IncrementInstruction extends ImmediateByteInstruction {
@@ -23,5 +24,11 @@ export default class IncrementInstruction extends ImmediateByteInstruction {
     } else {
       buffer.writeByte(this.increment);
     }
+  }
+
+  toObject() {
+    return super.toObject({
+      increment: this.increment
+    });
   }
 }

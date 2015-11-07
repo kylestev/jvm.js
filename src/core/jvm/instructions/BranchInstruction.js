@@ -1,3 +1,4 @@
+/** @ignore */
 const AbstractBranchInstruction = require('./AbstractBranchInstruction');
 
 export default class BranchInstruction extends AbstractBranchInstruction {
@@ -18,5 +19,11 @@ export default class BranchInstruction extends AbstractBranchInstruction {
   write(buffer) {
     super.write(buffer);
     buffer.writeShort(super.branchOffset);
+  }
+
+  toObject() {
+    return super.toObject({
+      size: this.size
+    });
   }
 }

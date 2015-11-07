@@ -3,6 +3,7 @@ const _ = require('../util/lodash');
 import { ClassInfo } from './jvm/ClassInfo';
 import { FieldInfo } from './jvm/FieldInfo';
 import { MethodInfo } from './jvm/MethodInfo';
+import { ConstantPool } from './jvm/ConstantPool';
 import { AttributeInfo } from './jvm/AttributeInfo';
 import { ClassCollection } from './ClassCollection';
 import { ClassFileParser } from './parsers/ClassFileParser';
@@ -43,7 +44,16 @@ function replaceConstantPoolStringLookups(memberInfo, pool) {
   return memberInfo;
 }
 
+/**
+ * Utility class for loading JVM Class Files into {@link ClassInfo} objects.
+ */
 class ClassLoader {
+  /**
+   * Parses the class from the {@link Buffer} object.
+   * @param  {string} name - the name of the Class File
+   * @param  {Buffer} buff - the byte Buffer object
+   * @return {Promise<ClassInfo>}
+   */
   loadClass(name, buff) {
     return new Promise((resolve, reject) => {
       try {
@@ -61,7 +71,7 @@ class ClassLoader {
         let version = { major: cls.major_version, minor: cls.minor_version };
         let className = constantPoolLookup(pool, pool[cls.this_class - 1].info.name_index);
         let superName = constantPoolLookup(pool, pool[cls.super_class - 1].info.name_index);
-        let classInfo = new ClassInfo(cls.access_flags, version, className, superName, pool);
+        let classInfo = new ClassInfo(cls.access_flags, version, className, superName, new ConstantPool(pool));
 
         _.each(cls.interfaces, (intr) => {
           let inter = constantPoolLookup(pool, pool[intr.class_index - 1].info.name_index);
@@ -91,6 +101,11 @@ class ClassLoader {
     });
   }
 
+  /**
+   * Loads all classes from a {@link Jar}.
+   * @param  {Jar} archive
+   * @return {Promise<ClassCollection>}
+   */
   loadClasses(archive) {
     let classes = new Map();
     return Promise.all(
@@ -108,6 +123,6 @@ class ClassLoader {
   }
 }
 
-export default {
+export {
   ClassLoader
 };
