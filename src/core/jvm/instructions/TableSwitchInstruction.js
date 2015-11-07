@@ -5,8 +5,8 @@ const PaddedInstruction = require('./PaddedInstruction');
 
 export default class TableSwitchInstruction extends PaddedInstruction {
 
-  constructor(idx, opcode) {
-    super(idx, opcode);
+  constructor(methodInfo, idx, opcode) {
+    super(methodInfo, idx, opcode);
     this.defaultOffset = 0;
     this.lowByte = 0;
     this.highByte = 0;

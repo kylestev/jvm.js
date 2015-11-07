@@ -7,8 +7,8 @@ const OffsetPair = require('../OffsetPair')
 
 export default class LookupSwitchInstruction extends PaddedInstruction {
 
-  constructor(idx, opcode) {
-    super(idx, opcode);
+  constructor(methodInfo, idx, opcode) {
+    super(methodInfo, idx, opcode);
     this.offsetPairs = [];
     this.defaultOffset = 0;
   }

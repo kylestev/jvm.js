@@ -28,7 +28,7 @@ export function parseInstructions(method) {
     let opcode = buffer.byte();
     let idx = instructions.length;
 
-    current = InstructionFactory.of(idx, opcode, wide);
+    current = InstructionFactory.of(method, idx, opcode, wide);
     current.read(buffer);
 
     if (previous != null) {

@@ -4,7 +4,7 @@ const AbstractInstruction = require('./AbstractInstruction');
 export default class InstructionWrapper extends AbstractInstruction {
 
   constructor(instruction) {
-    super(instruction.idx, instruction.opcode);
+    super(instruction.methodInfo, instruction.idx, instruction.opcode);
     this.instruction = instruction;
   }
 

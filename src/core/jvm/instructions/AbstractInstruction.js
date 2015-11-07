@@ -3,7 +3,8 @@ import { OPCODE_TO_NAME } from './Opcodes';
 
 export default class AbstractInstruction {
     
-  constructor(idx, opcode) {
+  constructor(methodInfo, idx, opcode) {
+    this.methodInfo = methodInfo;
     this.idx = idx;
     this.opcode = opcode;
     this.wide = false;
@@ -18,6 +19,10 @@ export default class AbstractInstruction {
 
   get size() {
     return 1;
+  }
+
+  get pool() {
+    return this.methodInfo._classInfo.pool;
   }
 
   read(buffer) {

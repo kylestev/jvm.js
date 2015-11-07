@@ -79,7 +79,7 @@ class ClassLoader {
         });
 
         _.each(cls.methods, (method) => {
-          let methodInfo = new MethodInfo(method.access_flags, method.name, method.descriptor);
+          let methodInfo = new MethodInfo(classInfo, method.access_flags, method.name, method.descriptor);
           method.attribute_info.forEach((attr) => {
             methodInfo.addAttribute(new AttributeInfo(attr, methodInfo));
           });
@@ -87,7 +87,7 @@ class ClassLoader {
         });
 
         _.each(cls.fields, (field) => {
-          let fieldInfo = new FieldInfo(field.access_flags, field.name, field.descriptor);
+          let fieldInfo = new FieldInfo(classInfo, field.access_flags, field.name, field.descriptor);
           field.attribute_info.forEach((attr) => {
             fieldInfo.addAttribute(new AttributeInfo(attr, fieldInfo));
           });

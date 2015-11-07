@@ -3,8 +3,8 @@ const AbstractInstruction = require('./AbstractInstruction');
 
 export default class PaddedInstruction extends AbstractInstruction {
 
-  constructor(idx, opcode) {
-    super(idx, opcode);
+  constructor(methodInfo, idx, opcode) {
+    super(methodInfo, idx, opcode);
   }
 
   padding(offset) {

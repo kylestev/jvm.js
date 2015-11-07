@@ -3,8 +3,8 @@ const ImmediateShortInstruction = require('./ImmediateShortInstruction');
 
 export default class InvokeDynamicInstruction extends ImmediateShortInstruction {
 
-  constructor(idx, opcode) {
-    super(idx, opcode);
+  constructor(methodInfo, idx, opcode) {
+    super(methodInfo, idx, opcode);
   }
 
   get size() {
