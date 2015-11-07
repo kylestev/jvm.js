@@ -14,6 +14,7 @@ export default class IncrementInstruction extends ImmediateByteInstruction {
   }
 
   read(buffer) {
+    super.read(buffer);
     this.increment = (this.wide ? buffer.short() : buffer.byte());
   }
 
