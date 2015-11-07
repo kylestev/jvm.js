@@ -266,6 +266,10 @@ function buildInstructionIndexCache() {
       indexCache[i] = {
         type: val.type, subject_to_wide: val.subject_to_wide
       };
+
+      if ('wrap' in val) {
+        indexCache[i].wrap = val.wrap;
+      }
     }
   });
 
