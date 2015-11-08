@@ -8,11 +8,11 @@ export default class MemberInstruction extends ImmediateShortInstruction {
   }
 
   get desc() {
-    return this.pool.at(this.typeInfo.name_index).info.bytes;
+    return this.pool.at(this.typeInfo.descriptor_index).info.bytes;
   }
 
   get name() {
-    return this.pool.at(this.typeInfo.descriptor_index).info.bytes;
+    return this.pool.at(this.typeInfo.name_index).info.bytes;
   }
 
   get owner() {
