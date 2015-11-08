@@ -2,6 +2,42 @@ import * as _ from 'lodash';
 import { ACC_SYNTHETIC, ACC_ABSTRACT } from './AccessFlags';
 import { MemberInfo } from './MemberInfo';
 
+let parameterParser = (desc) => {
+  let params = [];
+  let paramString = desc.slice(desc.indexOf('(') + 1, desc.indexOf(')'));
+  let arrayStr = '';
+  for (let i = 0; i < paramString.length;) {
+    let token = paramString[i];
+    switch (token) {
+      case '[':
+        arrayStr += '[';
+        i++
+        break;
+      case 'B':
+      case 'C':
+      case 'D':
+      case 'F':
+      case 'I':
+      case 'J':
+      case 'S':
+      case 'Z':
+        params.push(arrayStr + token);
+        arrayStr = '';
+        i++
+        break;
+      case 'L':
+        let end = paramString.indexOf(';', i);
+        let param = paramString.slice(i, end + 1);
+        params.push(arrayStr + param);
+        arrayStr = '';
+        i += param.length;
+        break;
+    }
+  }
+
+  return params;
+};
+
 /**
  * Wrapper for JVM Class File method entry.
  */
@@ -67,6 +103,22 @@ class MethodInfo extends MemberInfo {
   }
 
   /**
+   * Parses the method descriptor's parameters.
+   * @return {Array<string>}
+   */
+  get parameters() {
+    return parameterParser(this.desc);
+  }
+
+  /**
+   * Parses the return type from the method's descriptor.
+   * @return {string}
+   */
+  get returnType() {
+    return this.desc.slice(this.desc.lastIndexOf(')') + 1);
+  }
+
+  /**
    * Serialized version of this class without circular references.
    * @return {Object}
    */
@@ -79,5 +131,6 @@ class MethodInfo extends MemberInfo {
 }
 
 export {
-  MethodInfo
+  MethodInfo,
+  parameterParser
 };
