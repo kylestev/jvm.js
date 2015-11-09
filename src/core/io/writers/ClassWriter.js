@@ -28,6 +28,9 @@ class ClassWriter {
     return this.majorVerifier.verify();
   }
 
+  /**
+   * Verifies and writes the {@link ClassInfo} object to the buffer.
+   */
   write() {
     if ( ! this.verify()) {
       throw new Error('Unable to verify class contents for writing: ' + this.cls.name);
