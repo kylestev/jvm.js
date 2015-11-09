@@ -1,5 +1,5 @@
-import { Jar } from './core/Jar';
-let ConstantInstruction = require('./core/jvm/instructions/ConstantInstruction');
+import { Jar } from '../src/core/Jar';
+let ConstantInstruction = require('../src/core/jvm/instructions/ConstantInstruction');
 
 let start = process.hrtime();
 
