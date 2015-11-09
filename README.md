@@ -29,10 +29,10 @@ If you're unfamiliar with Promises, or need a refresher, checkout Mozilla's exce
 
 ## Loading a Jar's classes
 
-This example using ES6.
+The example below uses ES6 and shows how easy it is to parse a Jar file.
 
 ```es6
-var Jar = require('jvm').Jar;
+import { Jar } from 'jvm';
 
 Jar.unpack('./test.jar')
   .then((jar) => {
