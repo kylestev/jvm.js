@@ -20,21 +20,6 @@ Jar.unpack(process.argv[2])
           fieldCount: cls.fields.length
         }, null, 2));
       }
-        cls.methods.forEach(method => {//method.instructions.forEach(insn => {
-          console.log(method.name + method.desc, method.parameters, method.returnType)
-          // if (insn instanceof ConstantInstruction) {
-          //   // if ( ! (insn.tag in seen)) {
-          //   //   console.log(insn.tag, insn.poolInfo, insn.pool.valueAt(insn.instruction.val));
-          //   //   seen[insn.tag] = true;
-          //   // }
-          //   let val = insn.val;
-          //   if (val === undefined) {
-          //     console.log('undefined', insn.tag);
-          //   } else {
-          //     console.log(val)
-          //   }
-          // }
-        })
     }
   })
   .catch(console.error.bind(console));
