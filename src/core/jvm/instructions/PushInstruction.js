@@ -8,6 +8,6 @@ export default class PushInstruction extends InstructionWrapper {
   }
 
   get val() {
-    return instruction.val;
+    return this.instruction.val;
   }
 }

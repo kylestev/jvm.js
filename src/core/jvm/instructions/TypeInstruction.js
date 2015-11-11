@@ -12,7 +12,7 @@ export default class TypeInstruction extends ImmediateShortInstruction {
   }
 
   get type() {
-    let nameIndex = this.pool.at(this.valInfo.name_and_type_index).info.name_index;
+    let nameIndex = this.valInfo.name_index;
     return this.pool.at(nameIndex).info.bytes;
   }
 }
