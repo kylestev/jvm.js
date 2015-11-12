@@ -7,7 +7,7 @@ import { MemberInfo } from './MemberInfo';
  * @param  {string} desc - method descriptor
  * @return {Array<string>}
  */
-let parameterParser = (desc) => {
+export function parameterParser(desc) {
   let params = [];
   let paramString = desc.slice(desc.indexOf('(') + 1, desc.indexOf(')'));
   let arrayStr = '';
