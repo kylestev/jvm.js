@@ -18,4 +18,8 @@ export default class AbstractBranchInstruction extends AbstractInstruction {
       total_offset: this.totalOffset
     });
   }
+
+  toString() {
+    return super.toString({ branchOffset: this.branchOffset, totalOffset: this.totalOffset });
+  }
 }

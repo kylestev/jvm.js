@@ -44,4 +44,9 @@ export default class AbstractInstruction {
 
     return _.merge(defaults, props);
   }
+
+  toString(props = {}) {
+    let params = _.map(props, (val, key) => key + '=' + val).join(', ');
+    return this.opname + ' [' + params + ']';
+  }
 }

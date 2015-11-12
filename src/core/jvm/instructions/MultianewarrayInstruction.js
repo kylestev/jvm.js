@@ -26,4 +26,8 @@ export default class MultianewarrayInstruction extends ImmediateShortInstruction
       size: this.size
     });
   }
+
+  toString() {
+    return super.toString({ dimensions: this.dimensions });
+  }
 }

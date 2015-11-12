@@ -32,4 +32,8 @@ export default class IncrementInstruction extends ImmediateByteInstruction {
       increment: this.increment
     });
   }
+
+  toString() {
+    return super.toString({ increment: this.increment });
+  }
 }

@@ -27,4 +27,8 @@ export default class VariableInstruction extends InstructionWrapper {
       val: this.var
     });
   }
+
+  toString() {
+    return super.toString({ val: this.val });
+  }
 }

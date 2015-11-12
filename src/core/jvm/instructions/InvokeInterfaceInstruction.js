@@ -31,4 +31,8 @@ export default class InvokeInterfaceInstruction extends ImmediateShortInstructio
       size: this.size
     });
   }
+
+  toString() {
+    return super.toString({ count: this.count });
+  }
 }
