@@ -27,4 +27,8 @@ export default class MemberInstruction extends ImmediateShortInstruction {
   get valInfo() {
     return this.pool.at(this.val).info;
   }
+
+  toString() {
+    return super.toString({ name: this.name, desc: this.desc, owner: this.owner });
+  }
 }

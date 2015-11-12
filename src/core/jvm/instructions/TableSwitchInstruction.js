@@ -50,4 +50,13 @@ export default class TableSwitchInstruction extends PaddedInstruction {
       size: this.size
     });
   }
+
+  toString() {
+    return super.toString({
+      defaultOffset: this.defaultOffset,
+      jumpOffsets: this.jumpOffsets,
+      lowByte: this.lowByte,
+      highByte: this.highByte,
+    });
+  }
 }

@@ -15,4 +15,8 @@ export default class TypeInstruction extends ImmediateShortInstruction {
     let nameIndex = this.valInfo.name_index;
     return this.pool.at(nameIndex).info.bytes;
   }
+
+  toString() {
+    return super.toString({ type: this.type });
+  }
 }

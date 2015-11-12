@@ -10,4 +10,8 @@ export default class PushInstruction extends InstructionWrapper {
   get val() {
     return this.instruction.val;
   }
+
+  toString() {
+    return super.toString({ val: this.val });
+  }
 }

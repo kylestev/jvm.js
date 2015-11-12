@@ -49,4 +49,8 @@ export default class LookupSwitchInstruction extends PaddedInstruction {
       size: this.size
     });
   }
+
+  toString() {
+    return super.toString({ defaultOffset: this.defaultOffset, offsetPairs: this.offsetPairs });
+  }
 }

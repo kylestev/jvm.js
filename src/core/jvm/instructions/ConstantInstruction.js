@@ -33,4 +33,8 @@ export default class ConstantInstruction extends InstructionWrapper {
   get val() {
     return this.pool.valueAt(this.instruction.val);
   }
+
+  toString() {
+    return super.toString({ val: this.val });
+  }
 }
