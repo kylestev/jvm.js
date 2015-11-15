@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { ACC_ABSTRACT, ACC_SYNTHETIC } from './AccessFlags';
 import { parseInstructions } from '../parsers/BytecodeInstructions';
+import { AttributeMapping } from './Attributes';
 
 const AttributeDecoderLookup = {
   Code: function (method) {
@@ -9,6 +10,12 @@ const AttributeDecoderLookup = {
     }
 
     return parseInstructions(method);
+  },
+  ConstantValue: function (field) {
+    let attr = _.find(field.attributes, { name: 'ConstantValue' }).raw;
+    let idx = (new AttributeMapping.ConstantValue(attr)).decode();
+
+    return field.classInfo.pool.valueAt(idx);
   }
 };
 

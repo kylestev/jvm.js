@@ -26,7 +26,10 @@ export class JVMConstantValueAttribute extends JVMAttribute {
   }
 
   decode() {
-    //
+    let buff = new NiceBuffer(this.attrInfo.info);
+
+    let constantValueIndex = buff.short();
+    return constantValueIndex;
   }
 }
 
@@ -344,6 +347,7 @@ export class JVMMethodParametersAttribute extends JVMAttribute {
 
 export const AttributeMapping = {
   Code: JVMCodeAttribute,
+  ConstantValue: JVMConstantValueAttribute,
   StackMapTable: JVMStackMapTableAttribute,
   Exceptions: JVMExceptionsAttribute,
   InnerClasses: JVMInnerClassesAttribute,
