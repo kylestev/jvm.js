@@ -20,12 +20,20 @@ class ClassVisitor extends EventEmitter {
     this.emit('visit-end', cls);
   }
 
+  visitField(cls, field) {
+    this.emit('visit-field', cls, field);
+  }
+
   visitFields(cls) {
-    cls.fields.forEach(field => this.emit('visit-field', cls, field));
+    cls.fields.forEach(field => this.visitField(cls, field));
+  }
+
+  visitMethod(cls, method) {
+    this.emit('visit-method', cls, method);
   }
 
   visitMethods(cls) {
-    cls.methods.forEach(method => this.emit('visit-method', cls, method));
+    cls.methods.forEach(method => this.visitMethod(cls, method));
   }
 }
 
