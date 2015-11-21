@@ -1,8 +1,10 @@
+import * as _ from 'lodash';
 import { EventEmitter } from 'events';
 
 class ClassVisitor extends EventEmitter {
-  constructor() {
+  constructor(opts) {
     super();
+    this.opts = opts;
   }
 
   accept(cls) {
@@ -31,7 +33,8 @@ class ClassVisitor extends EventEmitter {
   }
 
   visitFields(cls) {
-    cls.fields.forEach(field => this.visitField(cls, field));
+    this._filterMembers(cls, 'fields')
+      .forEach(field => this.visitField(cls, field));
   }
 
   visitMethod(cls, method) {
@@ -39,13 +42,35 @@ class ClassVisitor extends EventEmitter {
   }
 
   visitMethods(cls) {
-    cls.methods.forEach(method => this.visitMethod(cls, method));
+    this._filterMembers(cls, 'methods')
+      .forEach(method => this.visitMethod(cls, method));
+  }
+
+  _filterMembers(cls, member) {
+    let opts = this._optionsFor(member);
+
+    if (opts === false || ! opts.shouldVisit) {
+      return [];
+    }
+
+    let filterFn = opts.filter || false;
+    if (filterFn !== false) {
+      return cls[member].filter(filterFn);
+    }
+    return cls[member];
+  }
+
+  _optionsFor(member) {
+    return _.merge({
+      // flag for if this member should be visited
+      shouldVisit: true
+    }, _.get(this.opts, member, {}));
   }
 }
 
 class VerboseClassVisitor extends ClassVisitor {
-  constructor() {
-    super();
+  constructor(opts) {
+    super(opts);
 
     this.on('visit-start', (cls) => console.log('[visit-start]', cls.name));
     this.on('visit-field', (cls, field) => console.log('[visit-field] %s %s.%s', field.desc, cls.name, field.name));
