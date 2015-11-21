@@ -5,7 +5,9 @@ exposing classes used for traversing the contents of a `ClassInfo` object from
 jvm.js (a JavaScript representation of the JVM class file format) by utilizing
 the [Visitor Pattern](https://en.wikipedia.org/wiki/Visitor_pattern).
 
-## Example
+## Examples
+
+### Field Logging Visitor
 
 ```js
 import { Jar } from 'jvm';
@@ -31,6 +33,44 @@ Jar.unpack('/path/to/your.jar')
     }
   })
   // catch any uncaught errors during this Promise chain and log them to the console
+  .catch(console.error.bind(console));
+
+```
+
+### VerboseClassVisitor
+
+`jvm-visitor` ships with a verbose version of the default `ClassVisitor` which
+has the same interface for interacting with it and behaves the same way with
+one caveat: it binds event listeners for each type of even that `ClassVisitor`
+emits and prints out basic information about the class file when visited.
+
+This can aid debugging efforts without hampering development time as you can
+simply swap `new ClassVisitor` references with `new VerboseClassVisitor` in
+your code -- even if you're binding your own event listeners on top of those
+used by `VerboseClassVisitor`.
+
+```js
+import { Jar } from 'jvm';
+import { VerboseClassVisitor } from 'jvm-visitor';
+
+let visitor = new VerboseClassVisitor;
+
+Jar.unpack('/path/to/your.jar')
+  .then((jar) => {
+    for (let [name, cls] of jar) {
+      visitor.accept(cls);
+      // output will look similar to the following:
+      // >>> [visit-start] ClassName
+      // >>> [visit-field] FieldDesc ClassName.FieldName
+      // >>> [visit-field] ...
+      // >>> [visit-method] ClassName#MethodName+MethodDesc
+      // >>> [visit-method] ...
+      // >>> [visit-end] ClassName completed in 0.004365655s
+      // >>> [visit-start] ClassName1
+      // >>> ...
+      // >>> [visit-end] ClassName1 completed in 0.004233272s
+    }
+  })
   .catch(console.error.bind(console));
 
 ```
