@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "babel": "^5.8.34"
+  },
+  "dependencies": {
+    "jvm": "0.0.13"
+  }
+}
