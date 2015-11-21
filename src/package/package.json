@@ -1,9 +1,9 @@
 {
   "name": "jvm-visitor",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "./lib/index.js",
   "scripts": {
-    "compile": "babel -d lib/ src/*",
+    "compile": "babel -d lib/ src/",
     "prepublish": "npm run compile"
   },
   "devDependencies": {
