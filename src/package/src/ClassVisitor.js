@@ -37,6 +37,18 @@ class ClassVisitor extends EventEmitter {
   }
 }
 
+class VerboseClassVisitor extends ClassVisitor {
+  constructor() {
+    super();
+
+    this.on('visit-start', (cls) => console.log('[visit-start]', cls.name));
+    this.on('visit-field', (cls, field) => console.log('[visit-field] %s %s.%s', field.desc, cls.name, field.name));
+    this.on('visit-method', (cls, method) => console.log('[visit-method] %s#%s%s', cls.name, method.name, method.desc));
+    this.on('visit-end', (cls) => console.log('[visit-end]', cls.name));
+  }
+}
+
 export {
-  ClassVisitor
+  ClassVisitor,
+  VerboseClassVisitor
 };
