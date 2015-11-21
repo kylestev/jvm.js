@@ -1,6 +1,6 @@
 {
   "name": "jvm-visitor",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "main": "./lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/*",
