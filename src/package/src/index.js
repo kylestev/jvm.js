@@ -1,5 +1,6 @@
-import { ClassVisitor } from './ClassVisitor';
+import { ClassVisitor, VerboseClassVisitor } from './ClassVisitor';
 
 export {
-  ClassVisitor
+  ClassVisitor,
+  VerboseClassVisitor
 };
