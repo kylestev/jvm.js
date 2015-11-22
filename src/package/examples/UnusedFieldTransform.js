@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 import { Jar } from 'jvm';
-import { VisitorPipeline } from '../src/Pipeline';
+import { Pipeline } from '../src/Pipeline';
 import { ClassVisitor } from '../src/ClassVisitor';
 import { Flags } from 'jvm/lib/core/jvm/AccessFlags';
 
@@ -86,28 +86,40 @@ class ReferencedFieldVisitor extends FieldVisitor {
   }
 }
 
-Jar.unpack('/path/to/your.jar')
-  .then(jar => _.object([...jar]))
-  .then(jar => {
-    let startMillis = Date.now();
-
+let createFieldUsagePipeline = () => {
+  let pipeline = new Pipeline;
+  pipeline.addStep('identification', (jar) => {
     let declaredFields = new DeclaredFieldVisitor(jar);
     let referencedFields = new ReferencedFieldVisitor(jar);
 
-    let classes = _.values(jar);
-    let pipeline = [declaredFields, referencedFields];
-
-    classes.forEach(cls => {
-      pipeline.forEach(visitor => visitor.accept(cls));
+    _.values(jar).forEach(cls => {
+      declaredFields.accept(cls);
+      referencedFields.accept(cls);
     });
 
-    let diff = _.difference(declaredFields.toArray(), referencedFields.toArray());
+    return {
+      declared: declaredFields.count,
+      referenced: referencedFields.count,
+      diff: _.difference(declaredFields.toArray(), referencedFields.toArray())
+    };
+  });
 
-    let endMillis = Date.now();
+  return pipeline;
+}
 
-    console.log('Fields declared but not referenced: %s.', diff.length);
-    console.log('Fields referenced: %s/%s', referencedFields.count, declaredFields.count);
+Jar.unpack('/path/to/your.jar')
+  .then(jar => _.object([...jar]))
+  .then(jar => {
+    let pipeline = createFieldUsagePipeline();
+    pipeline.after(elapsed => {
+      let result = pipeline.stepResult('identification');
 
-    console.log('elapsed ' + (endMillis - startMillis) + 'ms');
+      console.log('Fields declared but not referenced: %s.', result.diff.length);
+      console.log('Fields referenced: %s/%s', result.referenced, result.declared);
+
+      console.log('Unused Field Pipeline completed in %ss', elapsed);
+    });
+
+    pipeline.execute(jar);
   })
   .catch(console.error.bind(console));
