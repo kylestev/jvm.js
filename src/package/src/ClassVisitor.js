@@ -11,8 +11,14 @@ class ClassVisitor extends EventEmitter {
     let start = process.hrtime();
 
     this.beginVisit(cls);
-    this.visitFields(cls);
-    this.visitMethods(cls);
+
+    if (this.hasListenerBound('visit-field')) {
+      this.visitFields(cls);
+    }
+
+    if (this.hasListenerBound('visit-method')) {
+      this.visitMethods(cls);
+    }
 
     let [elapsedSeconds, elapsedNanos] = process.hrtime(start);
     let elapsed = (elapsedSeconds + (elapsedNanos / 1000000000));
@@ -26,6 +32,10 @@ class ClassVisitor extends EventEmitter {
 
   endVisit(cls, elapsed) {
     this.emit('visit-end', cls, elapsed);
+  }
+
+  hasListenerBound(type) {
+    return this.listenerCount(type) > 0;
   }
 
   visitField(cls, field) {
