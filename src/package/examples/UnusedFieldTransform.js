@@ -109,7 +109,7 @@ let createFieldUsagePipeline = () => {
   return pipeline;
 }
 
-Jar.unpack('/path/to/your.jar')
+Jar.unpack(process.argv[2])
   .then(jar => _.object([...jar]))
   .then(jar => {
     let pipeline = createFieldUsagePipeline();
