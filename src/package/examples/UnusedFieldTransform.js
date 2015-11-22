@@ -109,11 +109,27 @@ let createFieldUsagePipeline = () => {
     };
   });
 
+  pipeline.addStep('transformation', (jar) => {
+    pipeline
+      .stepResult('identification')
+      .unreferenced
+      .forEach(key => {
+        let [clazz, name, desc] = key.split(':');
+        let cls = jar[clazz];
+        let field = _.find(cls.fields, { name, desc });
+        _.remove(cls.fields, field);
+      });
+  });
+
   // output
 
   pipeline.afterStep('identification', (step, elapsed) => {
     console.log('Fields declared but not referenced: %s.', step.unreferenced.length);
     console.log('Fields referenced: %s/%s', step.referenced, step.declared);
+  });
+
+  pipeline.afterStep('transformation', (step, elapsed) => {
+    console.log('Removed fields from classes in %ss', elapsed);
   });
 
   pipeline.after(elapsed => console.log('Unused Field Pipeline completed in %ss', elapsed));
