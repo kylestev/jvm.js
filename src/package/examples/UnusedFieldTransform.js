@@ -9,15 +9,6 @@ let isVisibleToChildren = (member) => {
   return Flags.isPublic(member.accessFlags) || Flags.isProtected(member.accessFlags);
 }
 
-let parentHasVisibleField = (jar, cls, name, desc) => {
-  if ( ! _.has(jar, cls.superName)) {
-    return false;
-  }
-
-  let field = _.find(jar[cls.superName].fields, { name, desc });
-  return !! field && isVisibleToChildren(field);
-}
-
 class FieldVisitor extends ClassVisitor {
   constructor(jar) {
     super();
