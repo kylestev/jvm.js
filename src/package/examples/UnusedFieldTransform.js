@@ -90,6 +90,9 @@ class ReferencedFieldVisitor extends FieldVisitor {
 
 let createFieldUsagePipeline = () => {
   let pipeline = new Pipeline;
+
+  // analysis/transformation steps
+
   pipeline.addStep('identification', (jar) => {
     let declaredFields = new DeclaredFieldVisitor(jar);
     let referencedFields = new ReferencedFieldVisitor(jar);
@@ -102,9 +105,18 @@ let createFieldUsagePipeline = () => {
     return {
       declared: declaredFields.count,
       referenced: referencedFields.count,
-      diff: _.difference(declaredFields.toArray(), referencedFields.toArray())
+      unreferenced: _.difference(declaredFields.toArray(), referencedFields.toArray())
     };
   });
+
+  // output
+
+  pipeline.afterStep('identification', (step, elapsed) => {
+    console.log('Fields declared but not referenced: %s.', step.unreferenced.length);
+    console.log('Fields referenced: %s/%s', step.referenced, step.declared);
+  });
+
+  pipeline.after(elapsed => console.log('Unused Field Pipeline completed in %ss', elapsed));
 
   return pipeline;
 }
@@ -112,16 +124,7 @@ let createFieldUsagePipeline = () => {
 Jar.unpack(process.argv[2])
   .then(jar => _.object([...jar]))
   .then(jar => {
-    let pipeline = createFieldUsagePipeline();
-    pipeline.after(elapsed => {
-      let result = pipeline.stepResult('identification');
-
-      console.log('Fields declared but not referenced: %s.', result.diff.length);
-      console.log('Fields referenced: %s/%s', result.referenced, result.declared);
-
-      console.log('Unused Field Pipeline completed in %ss', elapsed);
-    });
-
-    pipeline.execute(jar);
+    createFieldUsagePipeline()
+      .execute(jar);
   })
   .catch(console.error.bind(console));

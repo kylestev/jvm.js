@@ -9,11 +9,29 @@ class Pipeline extends EventEmitter {
   }
 
   after(fn) {
-    this.on('execution-ended', fn);
+    let name = 'execution';
+    if (typeof fn === 'string') {
+      name = fn;
+      fn = arguments[1];
+    }
+    this.on(name + '-ended', fn);
+  }
+
+  afterStep(name, fn) {
+    this.on('step-ended', (evName) => {
+      if (name === evName) {
+        fn(this.results[name].result, this.results[name].elapsed);
+      }
+    });
   }
 
   before(fn) {
-    this.on('execution-started', fn);
+    let name = 'execution';
+    if (typeof fn === 'string') {
+      name = fn;
+      fn = arguments[1];
+    }
+    this.on(name + '-started', fn);
   }
 
   addStep(name, lambda) {
