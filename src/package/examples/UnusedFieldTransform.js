@@ -50,7 +50,7 @@ class DeclaredFieldVisitor extends FieldVisitor {
     while (parent) {
       parent.fields
         .filter(isVisibleToChildren)
-        .forEach(field => this.recordField(cls, field));
+        .forEach(field => this.recordField(parent, field));
 
       parent = this.jar[parent.superName];
     }
