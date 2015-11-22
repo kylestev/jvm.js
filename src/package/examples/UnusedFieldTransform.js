@@ -41,30 +41,26 @@ class FieldVisitor extends ClassVisitor {
 class DeclaredFieldVisitor extends FieldVisitor {
   constructor(jar) {
     super(jar);
-    this.on('visit-start', (cls) => {
-      let parent = jar[cls.superName];
-      while (parent) {
-        parent.fields
-          .filter(isVisibleToChildren)
-          .forEach(field => this.recordField(cls, field));
+    this.on('visit-start', (cls) => this.visitInheritedFields(cls));
+    this.on('visit-field', (cls, field) => this.recordField(cls, field));
+  }
 
-        parent = jar[parent.superName];
-      }
-    });
-    this.on('visit-field', (cls, field) => {
-      this.recordField(cls, field);
-    });
+  visitInheritedFields(cls) {
+    let parent = this.jar[cls.superName];
+    while (parent) {
+      parent.fields
+        .filter(isVisibleToChildren)
+        .forEach(field => this.recordField(cls, field));
+
+      parent = this.jar[parent.superName];
+    }
   }
 }
 
 class ReferencedFieldVisitor extends FieldVisitor {
   constructor(jar) {
     super(jar);
-    this.on('visit-method', (cls, method) => {
-      method.instructions
-        .filter(insn => insn.constructor.name === 'FieldInstruction' && insn.owner in jar)
-        .forEach(insn => this.visitFieldInstruction(insn));
-    });
+    this.on('visit-method', (cls, method) => this.visitMethodInstructions(method.instructions));
   }
 
   visitFieldInstruction(insn) {
@@ -83,6 +79,12 @@ class ReferencedFieldVisitor extends FieldVisitor {
 
       parent = this.jar[parent.superName];
     }
+  }
+
+  visitMethodInstructions(instructions) {
+    instructions
+      .filter(insn => insn.constructor.name === 'FieldInstruction' && insn.owner in this.jar)
+      .forEach(insn => this.visitFieldInstruction(insn));
   }
 }
 
