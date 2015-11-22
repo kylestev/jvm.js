@@ -1,64 +1,113 @@
 import * as _ from 'lodash';
 
 import { Jar } from 'jvm';
+import { VisitorPipeline } from '../src/Pipeline';
 import { ClassVisitor } from '../src/ClassVisitor';
-import { cloneSet, objectFromMap } from '../src/util';
+import { Flags } from 'jvm/lib/core/jvm/AccessFlags';
 
-function acceptVisitors(jar) {
-  let visitors = _.values(arguments).slice(1);
-  _.values(jar).forEach(cls => visitors.forEach(visitor => visitor.accept(cls)));
+let isVisibleToChildren = (member) => {
+  return Flags.isPublic(member.accessFlags) || Flags.isProtected(member.accessFlags);
 }
 
-let FieldKey = (cls, field) => [cls.name, field.name, field.desc].join(':');
+let parentHasVisibleField = (jar, cls, name, desc) => {
+  if ( ! _.has(jar, cls.superName)) {
+    return false;
+  }
 
-let DeclaredFieldFinder = (jar) => {
-  let declaredFields = new Set;
-  let fieldVisitor = new ClassVisitor({ methods: false });
-
-  fieldVisitor.on('visit-field', (cls, field) => declaredFields.add(FieldKey(cls, field)));
-
-  acceptVisitors(jar, fieldVisitor);
-
-  return declaredFields;
+  let field = _.find(jar[cls.superName].fields, { name, desc });
+  return !! field && isVisibleToChildren(field);
 }
 
-let UnreferencedFieldFinder = (jar, declared) => {
-  let unreferenced = cloneSet(declared);
+class FieldVisitor extends ClassVisitor {
+  constructor(jar) {
+    super();
+    this.jar = jar;
+    this.visited = new Set;
+  }
 
-  let instructionVisitor = new ClassVisitor({ fields: false });
+  get count() {
+    return this.visited.size;
+  }
 
-  instructionVisitor.on('visit-method', (cls, method) => {
-    method.instructions
-      .filter(insn => insn.constructor.name === 'FieldInstruction')
-      .map(insn => FieldKey(cls, insn))
-      .forEach(key => unreferenced.delete(key));
-  });
+  recordField(cls, field) {
+    this.visited.add([cls.name, field.name, field.desc].join(':'));
+  }
 
-  acceptVisitors(jar, instructionVisitor);
+  toArray() {
+    return [...this.visited];
+  }
+}
 
-  return unreferenced;
-};
+class DeclaredFieldVisitor extends FieldVisitor {
+  constructor(jar) {
+    super(jar);
+    this.on('visit-start', (cls) => {
+      let parent = jar[cls.superName];
+      while (parent) {
+        parent.fields
+          .filter(isVisibleToChildren)
+          .forEach(field => this.recordField(cls, field));
+
+        parent = jar[parent.superName];
+      }
+    });
+    this.on('visit-field', (cls, field) => {
+      this.recordField(cls, field);
+    });
+  }
+}
+
+class ReferencedFieldVisitor extends FieldVisitor {
+  constructor(jar) {
+    super(jar);
+    this.on('visit-method', (cls, method) => {
+      method.instructions
+        .filter(insn => insn.constructor.name === 'FieldInstruction' && insn.owner in jar)
+        .forEach(insn => this.visitFieldInstruction(insn));
+    });
+  }
+
+  visitFieldInstruction(insn) {
+    let cls = this.jar[insn.owner];
+    let fieldStruct = { name: insn.name, desc: insn.desc };
+    this.recordField(cls, fieldStruct);
+
+    let parent = this.jar[cls.superName];
+    while (parent) {
+      let field = _.find(parent.fields, fieldStruct);
+      if ( ! field || ! isVisibleToChildren(field)) {
+        break;
+      }
+
+      this.recordField(parent, field);
+
+      parent = this.jar[parent.superName];
+    }
+  }
+}
 
 Jar.unpack('/path/to/your.jar')
-  .then(jar => objectFromMap(jar))
-  .then((jar) => {
-    let s = Date.now();
-    let declaredFields = DeclaredFieldFinder(jar);
-    let unusedFields = UnreferencedFieldFinder(jar, declaredFields);
+  .then(jar => _.object([...jar]))
+  .then(jar => {
+    let startMillis = Date.now();
 
-    let fieldsReferenced = (declaredFields.size - unusedFields.size);
-    console.log('%s/%s fields', fieldsReferenced, declaredFields.size);
+    let declaredFields = new DeclaredFieldVisitor(jar);
+    let referencedFields = new ReferencedFieldVisitor(jar);
 
-    for (let key of unusedFields) {
-      let [clazz, name, desc] = key.split(':');
-      let cls = jar[clazz];
-      let field = _.find(cls.fields, { name, desc });
-      _.remove(cls.fields, field);
-    }
+    let classes = _.values(jar);
+    let pipeline = [declaredFields, referencedFields];
 
-    let postTransformFieldCount = DeclaredFieldFinder(jar).size;
-    console.log('removed %s unused fields', (declaredFields.size - postTransformFieldCount));
+    classes.forEach(cls => {
+      pipeline.forEach(visitor => visitor.accept(cls));
+    });
 
-    console.log('elapsed ' + (Date.now() - s) + 'ms');
+    let diff = _.difference(declaredFields.toArray(), referencedFields.toArray());
+
+    let endMillis = Date.now();
+
+    console.log('Fields declared but not referenced: %s.', diff.length);
+    console.log('Fields referenced: %s/%s', referencedFields.count, declaredFields.count);
+
+    console.log('elapsed ' + (endMillis - startMillis) + 'ms');
   })
   .catch(console.error.bind(console));
