@@ -2,8 +2,9 @@ import { Timer } from './util';
 import { EventEmitter } from 'events';
 
 class Pipeline extends EventEmitter {
-  constructor() {
+  constructor(name) {
     super();
+    this.name = name;
     this.steps = [];
     this.results = {};
   }
@@ -44,6 +45,12 @@ class Pipeline extends EventEmitter {
       this._runSteps(jar);
     });
     this.emit('execution-ended', elapsed);
+  }
+
+  log() {
+    let args = [...arguments];
+    args[0] = '[' + this.name + '] ' + args[0];
+    console.log.apply(console, args);
   }
 
   stepResult(name) {
