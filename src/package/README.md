@@ -7,6 +7,8 @@ the [Visitor Pattern](https://en.wikipedia.org/wiki/Visitor_pattern).
 
 ## Examples
 
+* [Unused field remover](/examples/UnusedFieldTransform.js)
+
 ### Field Logging Visitor
 
 ```js
