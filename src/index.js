@@ -1,5 +1,8 @@
 import { Jar } from './core/Jar';
+import { ClassVisitor, VerboseClassVisitor } from './visitor/ClassVisitor';
 
 export {
-  Jar
+  Jar,
+  ClassVisitor,
+  VerboseClassVisitor
 };
