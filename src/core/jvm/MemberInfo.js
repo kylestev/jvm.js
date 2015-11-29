@@ -81,7 +81,7 @@ class MemberInfo {
   toObject() {
     return {
       name: this.name,
-      flags: this.flags,
+      accessFlags: this.accessFlags,
       attributes: _.map(this.attributes, (attribute) => attribute.toObject())
     };
   }
