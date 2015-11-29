@@ -40,34 +40,25 @@ const FLAGS = {
   ACC_ENUM
 };
 
+export const MethodNames = _.object(_.map(FLAGS, (val, key) => {
+    let name = key.split('_')[1].toLowerCase();
+    return [val, 'is' + (name[0].toUpperCase()) + name.substring(1)];
+}));
+
+export const FlagMethods = _.object(_.map(MethodNames, (methodName, mask) => {
+  return [methodName, (flag) => (mask & flag) !== 0];
+}));
+
 /**
  * [AccessFlags description]
  */
 function AccessFlags() {
-  let funcs = {};
-  
-  _.each(FLAGS, (val, key) => {
-    let name = key.split('_')[1].toLowerCase();
-    let methodName = 'is' + (name[0].toUpperCase()) + name.substring(1);
-
-    funcs[methodName] = function (flag) {
-      return (val & flag) !== 0;
-    };
-  });
+  let funcs = _.clone(FlagMethods);
 
   funcs.listFlags = (flags) => {
-      // console.log(funcs)
-    return _.pluck(_.filter(_.map(_.keys(funcs), (method) => {
-      if (!method.startsWith('is')) {
-        return null;
-      }
-      // console.log(method)
-      let name = method.substring(2).toLowerCase();
-      return {
-        test: ACCESS_FLAGS[method](flags),
-        name: name
-      }
-    }), { test: true }), 'name');
+    return _.filter(_.map(FlagMethods, (maskFunc, name) => {
+      return maskFunc(flags) ? name.substring(2).toLowerCase() : null;
+    }));
   }
 
   return funcs;
