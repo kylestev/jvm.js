@@ -1,5 +1,6 @@
 const _ = require('../util/lodash');
 
+import { IoC } from '../ioc/IoC';
 import { ClassInfo } from './jvm/ClassInfo';
 import { FieldInfo } from './jvm/FieldInfo';
 import { MethodInfo } from './jvm/MethodInfo';
@@ -7,6 +8,11 @@ import { ConstantPool } from './jvm/ConstantPool';
 import { AttributeInfo } from './jvm/AttributeInfo';
 import { ClassCollection } from './ClassCollection';
 import { ClassFileParser } from './parsers/ClassFileParser';
+
+IoC.set('ClassInfoFactory', function () {
+  let cls = new (Function.prototype.bind.apply(ClassInfo, _.values(arguments)));
+  return cls;
+});
 
 function constantPoolLookup(pool, poolIdx) {
   return _.get(pool, [poolIdx - 1, 'info', 'bytes']);
@@ -71,7 +77,7 @@ class ClassLoader {
         let version = { major: cls.major_version, minor: cls.minor_version };
         let className = constantPoolLookup(pool, pool[cls.this_class - 1].info.name_index);
         let superName = constantPoolLookup(pool, pool[cls.super_class - 1].info.name_index);
-        let classInfo = new ClassInfo(cls.access_flags, version, className, superName, new ConstantPool(pool));
+        let classInfo = IoC.factory('ClassInfo')(cls.access_flags, version, className, superName, new ConstantPool(pool));
 
         _.each(cls.interfaces, (intr) => {
           let inter = constantPoolLookup(pool, pool[intr.class_index - 1].info.name_index);
