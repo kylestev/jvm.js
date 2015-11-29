@@ -31,7 +31,7 @@ class Container {
     return this.bindings[name].apply(null, params);
   }
 
-  set(name, factory, overwrite = false) {
+  set(name, factory, overwrite = true) {
     if (name in this.bindings && ! overwrite) {
       return;
     }
