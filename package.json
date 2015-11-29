@@ -1,6 +1,6 @@
 {
   "name": "jvm",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "main": "./lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
