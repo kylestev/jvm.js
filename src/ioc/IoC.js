@@ -17,13 +17,13 @@ class Container {
 
   factory(cls) {
     let key = cls + 'Factory';
+
     this.exists(key, true);
 
     let Factory = this.bindings[key];
     return function () {
-      let args = _.values(arguments);
-      return new (Function.prototype.bind.apply(Factory, args));
-    }
+      return Factory.apply(null,_.values(arguments));
+    };
   }
 
   make(name, params = []) {

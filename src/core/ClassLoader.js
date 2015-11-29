@@ -9,8 +9,8 @@ import { AttributeInfo } from './jvm/AttributeInfo';
 import { ClassCollection } from './ClassCollection';
 import { ClassFileParser } from './parsers/ClassFileParser';
 
-IoC.set('ClassInfoFactory', function () {
-  let cls = new (Function.prototype.bind.apply(ClassInfo, _.values(arguments)));
+IoC.set('ClassInfoFactory', function (flags, version, name, superName, pool) {
+  let cls = new ClassInfo(flags, version, name, superName, pool);
   return cls;
 });
 
