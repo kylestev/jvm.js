@@ -3,6 +3,7 @@ A bytecode library for Java written in Node.js
 
 [![npm version](https://badge.fury.io/js/jvm.svg)](https://badge.fury.io/js/jvm)
 [![](https://runetek.io/jvm.js/badge.svg)](https://runetek.io/jvm.js/)
+[![](https://david-dm.org/kylestev/jvm.js.svg)](https://david-dm.org/kylestev/jvm.js)
 
 This module is under active development and has not yet reached even a `v0.1` release.
 This module will be following [SemVer](http://semver.org/) once it is ready for use by 3rd parties.
