@@ -1,6 +1,11 @@
 {
   "name": "jvm",
   "version": "0.0.18",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kylestev/jvm.js.git"
+  },
   "main": "./lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
