@@ -6,13 +6,13 @@ class Container {
   }
 
   exists(name, assert = false) {
-    let exists = name in this.bindings;
+    let bound = name in this.bindings;
 
-    if ( ! exists && assert) {
+    if ( ! bound && assert) {
       throw new Error('Whoa, ' + name + ' has not been bound to this container!');
     }
 
-    return exists;
+    return bound;
   }
 
   factory(cls) {
