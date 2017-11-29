@@ -29,7 +29,3 @@ export class Timer {
     return timer.stop().elapsed;
   }
 }
-
-export {
-  Timer
-};

@@ -136,6 +136,5 @@ class MethodInfo extends MemberInfo {
 }
 
 export {
-  MethodInfo,
-  parameterParser
+  MethodInfo
 };
