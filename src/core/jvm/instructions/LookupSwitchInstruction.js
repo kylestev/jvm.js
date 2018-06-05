@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 
 /** @ignore */
-const PaddedInstruction = require('./PaddedInstruction');
+import PaddedInstruction from './PaddedInstruction';
 /** @ignore */
-const OffsetPair = require('../OffsetPair')
+import OffsetPair from '../OffsetPair';
 
 export default class LookupSwitchInstruction extends PaddedInstruction {
 

@@ -1,5 +1,5 @@
 /** @ignore */
-const ImmediateShortInstruction = require('./ImmediateShortInstruction');
+import ImmediateShortInstruction from './ImmediateShortInstruction';
 
 export default class InvokeDynamicInstruction extends ImmediateShortInstruction {
 

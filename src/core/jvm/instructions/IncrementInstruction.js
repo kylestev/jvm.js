@@ -1,5 +1,5 @@
 /** @ignore */
-const ImmediateByteInstruction = require('./ImmediateByteInstruction');
+import ImmediateByteInstruction from './ImmediateByteInstruction';
 
 export default class IncrementInstruction extends ImmediateByteInstruction {
 

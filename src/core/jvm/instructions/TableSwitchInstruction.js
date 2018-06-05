@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 /** @ignore */
-const PaddedInstruction = require('./PaddedInstruction');
+import PaddedInstruction from './PaddedInstruction';
 
 export default class TableSwitchInstruction extends PaddedInstruction {
 

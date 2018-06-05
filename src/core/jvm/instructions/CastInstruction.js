@@ -1,5 +1,5 @@
 /** @ignore */
-const InstructionWrapper = require('./InstructionWrapper');
+import InstructionWrapper from './InstructionWrapper';
 
 export default class CastInstruction extends InstructionWrapper {
 

@@ -1,5 +1,5 @@
 /** @ignore */
-const AbstractInstruction = require('./AbstractInstruction');
+import AbstractInstruction from './AbstractInstruction';
 
 export default class AbstractBranchInstruction extends AbstractInstruction {
 

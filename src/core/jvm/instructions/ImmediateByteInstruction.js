@@ -1,5 +1,5 @@
 /** @ignore */
-const AbstractInstruction = require('./AbstractInstruction');
+import AbstractInstruction from './AbstractInstruction';
 
 export default class ImmediateByteInstruction extends AbstractInstruction {
 

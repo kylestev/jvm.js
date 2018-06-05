@@ -1,5 +1,5 @@
 /** @ignore */
-const MemberInstruction = require('./MemberInstruction');
+import MemberInstruction from './MemberInstruction';
 
 import { parameterParser } from '../MethodInfo';
 
