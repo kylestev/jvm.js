@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { NUMERIC_TAGS, TAG_STRING } from '../ConstantPool';
 
 /** @ignore */
-const InstructionWrapper = require('./InstructionWrapper');
+import InstructionWrapper from './InstructionWrapper';
 
 function isNumeric(tag) {
   return _.includes(NUMERIC_TAGS, tag);

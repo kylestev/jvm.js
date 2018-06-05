@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 
 /** @ignore */
-const InstructionWrapper = require('./InstructionWrapper');
+import InstructionWrapper from './InstructionWrapper';
 /** @ignore */
-const ImmediateByteInstruction = require('./ImmediateByteInstruction');
+import ImmediateByteInstruction from './ImmediateByteInstruction';
 
 export default class VariableInstruction extends InstructionWrapper {
 

@@ -1,5 +1,5 @@
 /** @ignore */
-const MemberInstruction = require('./MemberInstruction');
+import MemberInstruction from './MemberInstruction';
 
 export default class FieldInstruction extends MemberInstruction {
 
