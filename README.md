@@ -2,7 +2,7 @@
 A bytecode library for Java written in Node.js
 
 [![npm version](https://badge.fury.io/js/jvm.svg)](https://badge.fury.io/js/jvm)
-[![](https://runetek.io/jvm.js/badge.svg)](https://runetek.io/jvm.js/)
+[![](https://doc.esdoc.org/github.com/kylestev/jvm.js/badge.svg)](https://doc.esdoc.org/github.com/kylestev/jvm.js/)
 [![](https://david-dm.org/kylestev/jvm.js.svg)](https://david-dm.org/kylestev/jvm.js)
 
 This module is under active development and has not yet reached a stable release.
