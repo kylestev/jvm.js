@@ -1,0 +1,34 @@
+{
+  "source": "./src",
+  "destination": "./docs",
+  "excludes": ["instructions/.+Instruction\\.js$", "Attributes\\.js$"],
+  "plugins": [
+    {
+      "name": "esdoc-standard-plugin",
+      "option": {
+        "unexportedIdentifier": { "enable": false },
+        "coverage": { "enable": true },
+        "lint": { "enable": true }
+      },
+      "brand": {
+        "title": "jvm.js",
+        "repository": "https://github.com/kylestev/jvm.js",
+        "site": "https://github.com/kylestev/jvm.js",
+        "author": "https://twitter.com/@kylestev"
+      },
+      "manual": {
+        "index": "./README.md"
+      }
+    },
+    {
+      "name": "esdoc-importpath-plugin",
+      "option": {
+        "stripPackageName": false,
+        "replaces": [{
+          "from": "^src/",
+          "to": "lib/"
+        }]
+      }
+    }
+  ]
+}
