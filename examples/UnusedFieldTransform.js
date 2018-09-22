@@ -128,7 +128,7 @@ let createFieldUsagePipeline = () => {
 }
 
 Jar.unpack(process.argv[2])
-  .then(jar => _.object([...jar]))
+  .then(jar => _.fromPairs([...jar]))
   .then(jar => {
     createFieldUsagePipeline()
       .execute(jar);
