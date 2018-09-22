@@ -40,12 +40,12 @@ const FLAGS = {
   ACC_ENUM
 };
 
-export const MethodNames = _.object(_.map(FLAGS, (val, key) => {
+export const MethodNames = _.fromPairs(_.map(FLAGS, (val, key) => {
     let name = key.split('_')[1].toLowerCase();
     return [val, 'is' + (name[0].toUpperCase()) + name.substring(1)];
 }));
 
-export const FlagMethods = _.object(_.map(MethodNames, (methodName, mask) => {
+export const FlagMethods = _.fromPairs(_.map(MethodNames, (methodName, mask) => {
   return [methodName, (flag) => (mask & flag) !== 0];
 }));
 

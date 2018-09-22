@@ -73,7 +73,7 @@ export const OPCODE_TO_NAME = [
   '', '', '', '', '', '', 'IMPDEP1', 'IMPDEP2'
 ];
 
-export const NAME_TO_OPCODE = _.object(_.map(_.invert(OPCODE_TO_NAME), (opcode, name) => {
+export const NAME_TO_OPCODE = _.fromPairs(_.map(_.invert(OPCODE_TO_NAME), (opcode, name) => {
   return [name, +opcode];
 }));
 
