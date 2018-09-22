@@ -15,7 +15,7 @@
     "test": "./node_modules/.bin/eslint src"
   },
   "dependencies": {
-    "adm-zip": "^0.4.7",
+    "adm-zip": "^0.4.9",
     "binary-parser": "^1.1.5",
     "cjson": "^0.5.0",
     "lodash": "^4.17.0",
