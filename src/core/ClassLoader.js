@@ -1,4 +1,4 @@
-const _ = require('../util/lodash');
+import _ from '../util/lodash';
 
 import { IoC } from '../ioc/IoC';
 import { ClassInfo } from './jvm/ClassInfo';
