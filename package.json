@@ -7,7 +7,7 @@
     "url": "git://github.com/kylestev/jvm.js.git"
   },
   "engines": {
-    "node": ">=5.10.0"
+    "node": ">=6.3"
   },
   "main": "./lib/index.js",
   "scripts": {
