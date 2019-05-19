@@ -2,8 +2,6 @@ import * as _ from 'lodash';
 import { ClassLoader } from './ClassLoader';
 import { ClassCollection } from './ClassCollection';
 
-const promisify = require('promisify-node');
-const fs = promisify('fs');
 const AdmZip = require('adm-zip');
 
 /**
