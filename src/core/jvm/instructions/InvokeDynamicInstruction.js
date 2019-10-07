@@ -28,3 +28,5 @@ export default class InvokeDynamicInstruction extends ImmediateShortInstruction 
     });
   }
 }
+
+module.exports = InvokeDynamicInstruction;

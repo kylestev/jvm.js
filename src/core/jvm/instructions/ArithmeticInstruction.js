@@ -7,3 +7,5 @@ export default class ArithmeticInstruction extends InstructionWrapper {
     super(instruction);
   }
 }
+
+module.exports = ArithmeticInstruction;

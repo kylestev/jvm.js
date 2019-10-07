@@ -20,3 +20,5 @@ export default class TypeInstruction extends ImmediateShortInstruction {
     return super.toString({ type: this.type });
   }
 }
+
+module.exports = TypeInstruction;

@@ -15,3 +15,5 @@ export default class PushInstruction extends InstructionWrapper {
     return super.toString({ val: this.val });
   }
 }
+
+module.exports = PushInstruction;

@@ -54,3 +54,5 @@ export default class LookupSwitchInstruction extends PaddedInstruction {
     return super.toString({ defaultOffset: this.defaultOffset, offsetPairs: this.offsetPairs });
   }
 }
+
+module.exports = LookupSwitchInstruction;

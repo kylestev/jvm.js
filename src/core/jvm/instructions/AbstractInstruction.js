@@ -50,3 +50,5 @@ export default class AbstractInstruction {
     return this.opname + ' [' + params + ']';
   }
 }
+
+module.exports = AbstractInstruction;

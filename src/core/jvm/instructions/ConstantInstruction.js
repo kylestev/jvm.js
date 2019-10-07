@@ -38,3 +38,5 @@ export default class ConstantInstruction extends InstructionWrapper {
     return super.toString({ val: this.val });
   }
 }
+
+module.exports = InstructionWrapper;

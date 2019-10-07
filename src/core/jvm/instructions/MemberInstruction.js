@@ -32,3 +32,5 @@ export default class MemberInstruction extends ImmediateShortInstruction {
     return super.toString({ name: this.name, desc: this.desc, owner: this.owner });
   }
 }
+
+module.exports = MemberInstruction;

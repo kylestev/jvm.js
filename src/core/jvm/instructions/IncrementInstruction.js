@@ -37,3 +37,5 @@ export default class IncrementInstruction extends ImmediateByteInstruction {
     return super.toString({ increment: this.increment });
   }
 }
+
+module.exports = IncrementInstruction;

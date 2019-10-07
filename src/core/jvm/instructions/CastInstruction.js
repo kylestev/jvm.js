@@ -7,3 +7,5 @@ export default class CastInstruction extends InstructionWrapper {
     super(instruction);
   }
 }
+
+module.exports = CastInstruction;

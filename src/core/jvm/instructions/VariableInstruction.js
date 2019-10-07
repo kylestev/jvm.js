@@ -32,3 +32,5 @@ export default class VariableInstruction extends InstructionWrapper {
     return super.toString({ val: this.val });
   }
 }
+
+module.exports = VariableInstruction;

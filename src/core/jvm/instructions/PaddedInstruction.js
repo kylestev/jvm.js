@@ -32,3 +32,5 @@ export default class PaddedInstruction extends AbstractInstruction {
     }
   }
 }
+
+module.exports = PaddedInstruction;

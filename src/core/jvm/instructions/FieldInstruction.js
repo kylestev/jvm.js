@@ -7,3 +7,5 @@ export default class FieldInstruction extends MemberInstruction {
     super(methodInfo, idx, opcode);
   }
 }
+
+module.exports = FieldInstruction;

@@ -60,3 +60,5 @@ export default class TableSwitchInstruction extends PaddedInstruction {
     });
   }
 }
+
+module.exports = TableSwitchInstruction;

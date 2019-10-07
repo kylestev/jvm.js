@@ -23,3 +23,5 @@ export default class AbstractBranchInstruction extends AbstractInstruction {
     return super.toString({ branchOffset: this.branchOffset, totalOffset: this.totalOffset });
   }
 }
+
+module.exports = AbstractBranchInstruction;
