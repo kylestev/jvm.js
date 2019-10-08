@@ -32,3 +32,5 @@ export default class MultianewarrayInstruction extends ImmediateShortInstruction
     return super.toString({ dimensions: this.dimensions });
   }
 }
+
+module.exports = MultianewarrayInstruction;

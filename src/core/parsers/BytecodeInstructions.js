@@ -18,7 +18,7 @@ function extractCodeFromMethod(method) {
  */
 export function parseInstructions(method) {
   let code = extractCodeFromMethod(method);
-  let buffer = new NiceBuffer(new Buffer(code));
+  let buffer = new NiceBuffer(Buffer.from(code));
 
   let wide = false;
   let current = null;

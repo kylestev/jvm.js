@@ -17,3 +17,5 @@ export default class MethodInstruction extends MemberInstruction {
     return parameterParser(this.desc);
   }
 }
+
+module.exports = MemberInstruction;

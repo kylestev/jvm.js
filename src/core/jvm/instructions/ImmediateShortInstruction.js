@@ -29,3 +29,5 @@ export default class ImmediateShortInstruction extends AbstractInstruction {
     });
   }
 }
+
+module.exports = ImmediateShortInstruction;

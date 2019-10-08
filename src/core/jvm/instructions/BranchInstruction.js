@@ -27,3 +27,5 @@ export default class BranchInstruction extends AbstractBranchInstruction {
     });
   }
 }
+
+module.exports = BranchInstruction;

@@ -34,3 +34,5 @@ export default class ImmediateByteInstruction extends AbstractInstruction {
     });
   }
 }
+
+module.exports = ImmediateByteInstruction;

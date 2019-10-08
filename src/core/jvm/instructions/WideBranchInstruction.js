@@ -27,3 +27,5 @@ export default class WideBranchInstruction extends AbstractBranchInstruction {
     });
   }
 }
+
+module.exports = WideBranchInstruction;
